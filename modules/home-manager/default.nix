@@ -1,0 +1,5 @@
+{
+  imports = [
+    ./symlink-worlds.nix
+  ];
+}

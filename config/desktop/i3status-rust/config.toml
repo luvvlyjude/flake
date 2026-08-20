@@ -1,0 +1,30 @@
+[theme]
+theme = "plain"
+[theme.overrides]
+idle_fg = "#ffffff"
+info_fg = "#ffffff"
+separator = "        "
+start_separator = ""
+
+[icons]
+icons = "emoji"
+
+# [[block]]
+# block = "focused_window"
+# format = "$title.str(max_w:1000)|None"
+
+[[block]]
+block = "music"
+format = "$combo.str(max_w:1000,rot_interval:0.5) $play|"
+player = "spotify"
+# interface_name_exclude = [".*firefox.*"]
+# format = "$icon {$volume.eng(w:2)|}"
+
+# [[block]]
+# block = "sound"
+# format = "$icon {$volume.eng(w:2)|}"
+
+[[block]]
+block = "time"
+interval = 10
+format = "$timestamp.datetime(f:'%A %B %-e %R')"
