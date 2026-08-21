@@ -13,6 +13,10 @@
             defaultBranch = "main";
           };
 
+	  url = {
+	    "git@github.com:".pushInsteadOf = "https://github.com/";
+	  };
+
           user = {
             name = "jude";
             email = builtins.concatStringsSep "@" [
