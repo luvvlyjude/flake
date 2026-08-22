@@ -4,7 +4,7 @@
   imports = [
     ../../config/core/boot/efi.nix
     ../../config/core/boot/systemd-boot.nix
-    ../../config/core/environment/issue.nix
+    ../../config/core/environment/etc
     ../../config/core/fonts.nix
     ../../config/core/hardware/nvidia.nix
     ../../config/core/localization.nix
