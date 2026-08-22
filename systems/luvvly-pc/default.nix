@@ -46,6 +46,7 @@
     ../../config/programs/mpv
     ../../config/programs/ncdu
     ../../config/programs/neovim
+    ../../config/programs/nh
     ../../config/programs/ranger
     ../../config/programs/spotify
     ../../config/programs/tree
