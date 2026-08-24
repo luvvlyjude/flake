@@ -34,8 +34,8 @@
   ];
 
   # override bcachefs package with latest snapshot release
-  boot.bcachefs.package =
-    inputs.bcachefs-tools.packages.${pkgs.stdenv.hostPlatform.system}.bcachefs-tools;
+  # boot.bcachefs.package =
+  #   inputs.bcachefs-tools.packages.${pkgs.stdenv.hostPlatform.system}.bcachefs-tools;
 
   fileSystems."/" = {
     device = "UUID=70fdf5d5-4f7c-4def-b8eb-6df5f6da441d";

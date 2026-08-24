@@ -8,6 +8,8 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/x86_64-linux";
 
+    # unused right now
+    # used for quickly getting new features after a release before it hits nixpkgs
     bcachefs-tools = {
       url = "github:koverstreet/bcachefs-tools";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
