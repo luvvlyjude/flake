@@ -1,5 +1,5 @@
 {
   imports = [
-    # ./symlink-worlds
+    ./tmpfs-symlink
   ];
 }

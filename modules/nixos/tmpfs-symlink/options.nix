@@ -1,15 +1,20 @@
 { lib }:
 
+let
+  relativePath = lib.types.strMatching "[^/].*" // {
+    description = "path relative to $HOME (not starting with  '/')";
+  };
+in
 {
-  enable = lib.mkEnableOption "symlink-worlds";
+  enable = lib.mkEnableOption "Declarative Minecraft world symlinking with optional tmpfs saves";
 
   users = lib.mkOption {
     type = lib.types.attrsWith {
       placeholder = "user";
       elemType = (
         lib.types.submodule ({
-          options.common-worlds = lib.mkOption {
-            type = lib.types.listOf lib.types.str;
+          options.worlds = lib.mkOption {
+            type = lib.types.listOf relativePath;
             default = [ ];
             example = [ "mcsr/worlds/Portal Practice v2" ];
             description = ''
@@ -27,12 +32,12 @@
                   { name, ... }:
                   {
                     options.saves = lib.mkOption {
-                      type = lib.types.str;
+                      type = relativePath;
                       default = ".local/share/PrismLauncher/instances/${name}/minecraft/saves";
                       defaultText = ".local/share/PrismLauncher/instances/<instance-name>/minecraft/saves";
                       example = ".local/share/PrismLauncher/instances/RSG Instance/minecraft/saves";
                       description = ''
-                        Path to the instance's saves normal folder.
+                        Path to the instance's normal saves folder.
 
                         Path should be relative to `<user>`'s $HOME.
                       '';
@@ -43,15 +48,15 @@
                       default = false;
                       example = true;
                       description = ''
-                        Whether or not to link this instance's saves folder to `tmpfs-mount`.
+                        Whether or not to link this instance's saves folder into `<user>.tmpfs`.
 
-                        This option can clobber your existing saves folder by replacing them
-                        with a symlink, so make sure you backup worlds from there that you want.
+                        In order to avoid clobbering existing saves, this instance's saves folder
+                        must be empty in order to replace with a link and the service will fail if not.
                       '';
                     };
 
                     options.worlds = lib.mkOption {
-                      type = lib.types.listOf lib.types.str;
+                      type = lib.types.listOf relativePath;
                       default = [ ];
                       example = [ "mcsr/worlds/Instance Exclusive World" ];
                       description = ''
@@ -81,9 +86,9 @@
               relative to `<user>`'s $HOME with the name of `<instance-name>`.
 
               All instances declared will receive links to
-              `services.symlink-worlds.<user>.common-worlds` for the same `<user>`.
+              `services.tmpfs-symlink.users.<user>.worlds` for the same `<user>`.
               Instances' saves folders may be declared to a different path using `saves`.
-              Instances' saves folders may be linked to a folder at `tmpfs-mount` using `tmpfs`.
+              Instances' saves folders may be linked to a folder at `<user>.tmpfs.mount` using `tmpfs`.
               Instances may have exclusive worlds linked using the `worlds` list.
             '';
           };
@@ -102,7 +107,7 @@
               };
 
               options.mount = lib.mkOption {
-                type = lib.types.str;
+                type = relativePath;
                 default = "mcsr/tmpfs";
                 example = ".local/share/mcsr-tmpfs";
                 description = ''
@@ -116,11 +121,11 @@
               };
 
               options.size = lib.mkOption {
-                type = lib.types.str;
+                type = lib.types.strMatching "[0-9]+([kKmMgG]|%)?";
                 default = "4g";
                 example = "15%";
                 description = ''
-                  Max usage of system memory in this tmpfs.
+                  Max usage of system memory for this tmpfs.
                 '';
               };
             });
@@ -144,6 +149,9 @@
               to a folder created here named after the instance.
 
               Enable this option per instance with `instances.<instance-name>.tmpfs`.
+
+              Changing these settings often requires manually unmounting and remounting
+              or a reboot as `nixos-rebuild switch` does not handle most changes.
             '';
           };
         })
@@ -166,15 +174,17 @@
             ];
           };
         };
-        common-worlds = [
+        worlds = [
           "mcsr/worlds/Portal Practice v2"
         ];
       };
     };
     description = ''
-      Declare users to declare their tmpfs, instances, and common-worlds.
+      Per-user declarations of instances, shared worlds, and an optional tmpfs.
 
       All path options within a user declaration are relative to their $HOME.
+
+      `<user>.worlds` list link worlds into every instance declared for a user.
 
       All mounts, directories, and links created for options declared for a user
       will be owned by that user.
