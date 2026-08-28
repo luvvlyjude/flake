@@ -3,10 +3,6 @@
 {
   imports = [ inputs.jay.nixosModules.default ];
 
-  nixpkgs.overlays = [
-    inputs.jay.overlays.default
-  ];
-
   programs.jay = {
     enable = true;
 
