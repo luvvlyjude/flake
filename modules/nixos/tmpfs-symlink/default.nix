@@ -7,6 +7,16 @@
 }:
 
 let
+  inherit (utils) escapeSystemdPath;
+  inherit (lib)
+    concatMap
+    concatMapStringsSep
+    concatStringsSep
+    filter
+    getExe
+    mkIf
+    ;
+
   cfg = config.services.tmpfs-symlink;
   options = import ./options.nix { inherit lib; };
   assertions = import ./assertions.nix { inherit config lib; } allTmpfs allWorlds cfg;
@@ -22,9 +32,9 @@ let
       inherit (instance) user size;
       where = "${home}/${instance.saves}";
     }
-  ) (builtins.filter (instance: instance.tmpfs) cfg.instances);
+  ) (filter (instance: instance.tmpfs) cfg.instances);
 
-  allWorlds = lib.concatMap (
+  allWorlds = concatMap (
     instance:
     let
       home = config.users.users.${instance.user}.home;
@@ -41,7 +51,7 @@ let
 
   stateFile = (
     pkgs.writeText "tmpfs-symlink-all-links" (
-      builtins.concatStringsSep "\n" (map (world: world.link) allWorlds) + "\n"
+      concatStringsSep "\n" (map (world: world.link) allWorlds) + "\n"
     )
   );
 
@@ -66,12 +76,12 @@ let
       # this way all on-disk links get deleted before mounting tmpfs
       # if someone is enabling tmpfs for the first time it would otherwise
       # leave behind links on disk
-      ${lib.concatMapStringsSep "\n" (tmpfs: ''
-        systemctl start ${utils.escapeSystemdPath tmpfs.where}.mount
+      ${concatMapStringsSep "\n" (tmpfs: ''
+        systemctl start ${escapeSystemdPath tmpfs.where}.mount
       '') allTmpfs}
 
       # create all world links
-      ${lib.concatMapStringsSep "\n" (world: ''
+      ${concatMapStringsSep "\n" (world: ''
         if [ -e "${world.link}" ]; then
           echo "Warning: Something with the same name already exists at ${world.link}. Skipping..."
         elif [ ! -d "$(dirname "${world.link}")" ]; then
@@ -91,7 +101,7 @@ in
 {
   options.services.tmpfs-symlink = options;
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     inherit assertions;
 
     systemd.services.tmpfs-symlink = {
@@ -105,7 +115,7 @@ in
       serviceConfig = {
         Type = "oneshot";
         StateDirectory = "tmpfs-symlink";
-        ExecStart = lib.getExe script;
+        ExecStart = getExe script;
       };
     };
 
@@ -113,7 +123,7 @@ in
       inherit (tmpfs) where;
       what = "tmpfs";
       type = "tmpfs";
-      options = lib.concatStringsSep "," [
+      options = concatStringsSep "," [
         "size=${tmpfs.size}"
         "mode=0755"
         "uid=${tmpfs.user}"
