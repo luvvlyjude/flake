@@ -73,12 +73,12 @@ let
       # create all world links
       ${lib.concatMapStringsSep "\n" (world: ''
         if [ -e "${world.link}" ]; then
-          echo "Warning: Something with the same name already exists at "${world.link}". Skipping..."
+          echo "Warning: Something with the same name already exists at ${world.link}. Skipping..."
         elif [ ! -d "$(dirname "${world.link}")" ]; then
-          echo "Warning: Parent directory does not exist for "${world.link}". Skipping..."
+          echo "Warning: Parent directory does not exist for ${world.link}. Skipping..."
         else
           if [ ! -e "${world.target}" ]; then
-            echo "Warning: Target source does not exist for "${world.link}". Creating dead link..."
+            echo "Warning: Target source does not exist for ${world.link}. Creating dead link..."
           fi
           ln -sT "${world.target}" "${world.link}"
         fi
