@@ -5,50 +5,42 @@ in
   services.tmpfs-symlink = {
     enable = true;
 
-    users = {
-      jude = {
-        tmpfs = {
-          enable = true;
-          mount = "mcsr/worlds/tmpfs";
-          size = "15%";
-        };
-        instances = {
-          seedqueue = {
-            tmpfs = true;
-            worlds = [
-            ];
-          };
-        };
-        worlds = [
-          "${worlds}/Z__1.16"
-          "${worlds}/Z__allalalalal"
-          "${worlds}/Z__bella world"
-          "${worlds}/Z__Builds"
-          "${worlds}/Z__Crafting Practice"
-          "${worlds}/Z__Crafting Practice v2"
-          "${worlds}/Z__FARM_WITH_DOOG"
-          "${worlds}/Z__friend smp 1"
-          "${worlds}/Z__friend smp 2"
-          "${worlds}/Z__friend smp 3"
-          "${worlds}/Z__friend smp 4"
-          "${worlds}/Z__friend smp 5"
-          "${worlds}/Z__friend smp 6"
-          "${worlds}/Z__Hardcore 3_0"
-          "${worlds}/Z__Lama's Practice Map"
-          "${worlds}/Z__lava room mansion portal"
-          "${worlds}/Z__LBP 3.14.0"
-          "${worlds}/Z__Mine a Chunk 1 51 28 200"
-          "${worlds}/Z__Overworld Practice v1"
-          "${worlds}/Z__OW crafting Practice V2"
-          "${worlds}/Z__PerchPractice"
-          "${worlds}/Z__Portal Practice"
-          "${worlds}/Z__Portal Practice v2"
-          "${worlds}/Z__REDSTONE"
-          "${worlds}/Z__Ryguy2k4 End Practice v3.4.0-1.16.1"
-          "${worlds}/Z__Speedcrafting"
-          "${worlds}/Z__zero_cycle_practice_astraf_nayoar"
+    instances = [
+      {
+        saves = ".local/share/PrismLauncher/instances/seedqueue/minecraft/saves";
+        size = "15%";
+        tmpfs = true;
+        user = "jude";
+        worlds = map (world: "${worlds}/${world}") [
+          "Z__1.16"
+          "Z__allalalalal"
+          "Z__bella world"
+          "Z__Builds"
+          "Z__Crafting Practice"
+          "Z__Crafting Practice v2"
+          "Z__FARM_WITH_DOOG"
+          "Z__friend smp 1"
+          "Z__friend smp 2"
+          "Z__friend smp 3"
+          "Z__friend smp 4"
+          "Z__friend smp 5"
+          "Z__friend smp 6"
+          "Z__Hardcore 3_0"
+          "Z__Lama's Practice Map"
+          "Z__lava room mansion portal"
+          "Z__LBP 3.14.0"
+          "Z__Mine a Chunk 1 51 28 200"
+          "Z__Overworld Practice v1"
+          "Z__OW crafting Practice V2"
+          "Z__PerchPractice"
+          "Z__Portal Practice"
+          "Z__Portal Practice v2"
+          "Z__REDSTONE"
+          "Z__Ryguy2k4 End Practice v3.4.0-1.16.1"
+          "Z__Speedcrafting"
+          "Z__zero_cycle_practice_astraf_nayoar"
         ];
-      };
-    };
+      }
+    ];
   };
 }
