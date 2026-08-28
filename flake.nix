@@ -44,7 +44,6 @@
     mcsr-nixos = {
       url = "https://git.uku3lig.net/uku/mcsr-nixos/archive/main.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.flake-parts.follows = "flake-parts";
     };
 
     rust-overlay = {
