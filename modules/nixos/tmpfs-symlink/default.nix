@@ -19,7 +19,7 @@ let
 
   cfg = config.services.tmpfs-symlink;
   options = import ./options.nix { inherit lib; };
-  assertions = import ./assertions.nix { inherit config lib; } allTmpfs allWorlds cfg;
+  assertions = import ./assertions.nix { inherit config lib; } allTmpfs cfg;
 
   allTmpfs = map (
     instance:
