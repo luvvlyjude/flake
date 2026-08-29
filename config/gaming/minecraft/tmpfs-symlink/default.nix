@@ -1,7 +1,13 @@
+{ inputs, ... }:
+
 let
   worlds = "mcsr/worlds/maps";
 in
 {
+  imports = [
+    inputs.mcsr-nixos.nixosModules.tmpfs-symlink
+  ];
+
   services.tmpfs-symlink = {
     enable = true;
 

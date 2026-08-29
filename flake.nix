@@ -42,7 +42,7 @@
     };
 
     mcsr-nixos = {
-      url = "https://git.uku3lig.net/uku/mcsr-nixos/archive/main.tar.gz";
+      url = "https://git.uku3lig.net/luvvlyjude/mcsr-nixos/archive/tmpfs-symlink.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
