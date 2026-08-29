@@ -1,7 +1,7 @@
 { inputs, ... }:
 
 let
-  worlds = "mcsr/worlds/maps";
+  mapWorlds = worlds: map (world: "mcsr/worlds/maps/${world}") worlds;
 in
 {
   imports = [
@@ -17,7 +17,7 @@ in
         size = "15%";
         tmpfs = true;
         user = "jude";
-        worlds = map (world: "${worlds}/${world}") [
+        worlds = mapWorlds [
           "Z__1.16"
           "Z__allalalalal"
           "Z__bella world"
