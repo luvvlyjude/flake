@@ -20,7 +20,6 @@ in
         worlds = mapWorlds [
           "Z__1.16"
           "Z__allalalalal"
-          "Z__bella world"
           "Z__Builds"
           "Z__Crafting Practice"
           "Z__Crafting Practice v2"
