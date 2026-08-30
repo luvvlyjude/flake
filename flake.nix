@@ -8,7 +8,26 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/x86_64-linux";
 
-    # unused right now
+    ktrompfl-old = {
+      url = "github:Ktrompfl/nix-config/88b987fd205e956037e7ab1471fdd7261a808bad";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.crane.follows = "crane";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.rust-overlay.follows = "rust-overlay";
+      inputs.jay.follows = "jay";
+      inputs.systems.follows = "systems";
+    };
+    ktrompfl = {
+      url = "github:Ktrompfl/nix-config";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.crane.follows = "crane";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.rust-overlay.follows = "rust-overlay";
+      inputs.jay.follows = "jay";
+      inputs.systems.follows = "systems";
+    };
+
+    # used right now
     # used for quickly getting new features after a release before it hits nixpkgs
     bcachefs-tools = {
       url = "github:koverstreet/bcachefs-tools";
