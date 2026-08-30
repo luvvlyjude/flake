@@ -44,7 +44,45 @@
       {
         home.packages = [
           (pkgs.ninjabrain-bot.override { jre = pkgs.temurin-bin-17; })
+          pkgs.ninjabrain-box
         ];
+
+        # home.file = {
+        #   ".config/ninjabrain-box/config.toml" = {
+        #     text = pkgs.writers.writeTOML "ninjabrain-box.toml" {
+        #       bot.settings = {
+        #                # green boat
+        #                mc-version = "pre-1.19";
+        #                sensitivity = 0.02291165;
+        #                sigma-boat = 0.0007;
+        #              };
+        #
+        #              window = {
+        #                output = "HDMI-A-1";
+        #                anchor = [
+        #                  "top"
+        #                  "right"
+        #                ];
+        #                coordinates = "chunk";
+        #                predictions = 3;
+        #                # font = "${config.theme.fonts.monospace.package}/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-Regular.ttf";
+        #                # font-size = 17.0;
+        #                opacity = 0.85;
+        #              };
+        #
+        #              behavior = {
+        #                start-hidden = false;
+        #                only-when-focused = [ "waywall" ]; # `show` overrides it until refocus
+        #                start-with-throws = false;
+        #                mode = "unbound"; # restricted
+        #              };
+        #
+        #              palette = lib.genAttrs (map (digit: "base0${digit}") (lib.stringToCharacters "0123456789ABCDEF")) (
+        #                name: config.theme.colors.withHashtag.${name}
+        #              );
+        #            };
+        #   };
+        # };
 
         home.activation.ninjabrainbotPrefs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           run install -Dm644 ${prefsXml} "$HOME/.java/.userPrefs/ninjabrainbot/prefs.xml"
