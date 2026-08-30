@@ -131,6 +131,7 @@
           modules = [
             ./systems/luvvly-pc
             inputs.self.nixosModules
+            inputs.bcachefs-tools.nixosModules.default
           ];
         };
       };
