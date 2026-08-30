@@ -33,10 +33,10 @@
     # spotify with autoscrolling and wayland forced
     spotify = prev.spotify.overrideAttrs (oldAttrs: rec {
       preFixup = (oldAttrs.preFixup or "") + ''
-                gappsWrapperArgs+=(
-        	  --add-flags "--ozone-platform=wayland"
-        	  --add-flags "--enable-blink-features=MiddleClickAutoscroll"
-        	)
+        gappsWrapperArgs+=(
+          --add-flags "--ozone-platform=wayland"
+          --add-flags "--enable-blink-features=MiddleClickAutoscroll"
+        )
       '';
     });
   };
