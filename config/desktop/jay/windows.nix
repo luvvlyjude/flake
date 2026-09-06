@@ -57,8 +57,14 @@ in
       auto-focus = false;
     }
     {
-      name = "waywall";
-      match.app-id = "waywall";
+      name = "1st-monitor";
+      match = {
+        just-mapped = true;
+        any = [
+          { app-id = "waywall"; }
+          { app-id = "com.gabm.satty"; }
+        ];
+      };
       action = moveToWorkspace "1";
       auto-focus = false;
     }
