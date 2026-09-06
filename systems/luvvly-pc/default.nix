@@ -45,6 +45,7 @@
     ../../config/programs/neovim
     ../../config/programs/nh
     ../../config/programs/ranger
+    ../../config/programs/satty
     ../../config/programs/spotify
     ../../config/programs/tree
     ../../config/programs/vlc
