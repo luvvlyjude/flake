@@ -1,11 +1,7 @@
 {
-  home-manager.sharedModules = [
-    {
-      programs.imv = {
-        enable = true;
-        settings = {
-        };
-      };
-    }
-  ];
+  hm.programs.imv = {
+    enable = true;
+    settings = {
+    };
+  };
 }

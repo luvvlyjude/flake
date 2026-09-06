@@ -6,6 +6,8 @@
     curl
     jq
     lshw
+    nixfmt
+    sbctl
     wget
     unzip
     zip

@@ -1,9 +1,7 @@
 {
-  home-manager.sharedModules = [
-    ({ pkgs, ... }: {
-      home.packages = [
-        pkgs.tree
-      ];
-    })
-  ];
+  hm = { pkgs, ... }: {
+    home.packages = [
+      pkgs.tree
+    ];
+  };
 }

@@ -1,11 +1,7 @@
 {
-  home-manager.sharedModules = [
-    {
-      programs.ranger = {
-        enable = true;
-        settings = {
-        };
-      };
-    }
-  ];
+  hm.programs.ranger = {
+    enable = true;
+    settings = {
+    };
+  };
 }

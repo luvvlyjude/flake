@@ -4,7 +4,7 @@
     openFirewall = false;
   };
 
-  # home-manager.sharedModules = [
+  # hm.imports = [
   #   {
   #     programs.ssh = {
   #       enable = true;

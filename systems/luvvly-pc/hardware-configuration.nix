@@ -33,10 +33,6 @@
     "pcie_aspm=off"
   ];
 
-  # override bcachefs package with latest snapshot release
-  # boot.bcachefs.package =
-  #   inputs.bcachefs-tools.packages.${pkgs.stdenv.hostPlatform.system}.bcachefs-tools;
-
   fileSystems."/" = {
     device = "UUID=70fdf5d5-4f7c-4def-b8eb-6df5f6da441d";
     fsType = "bcachefs";
@@ -49,11 +45,6 @@
       "fmask=0077"
       "dmask=0077"
     ];
-  };
-
-  fileSystems."/mnt/bcachefs" = {
-    device = "UUID=5f1e18d9-c665-4e62-9121-e482106c25cc";
-    fsType = "bcachefs";
   };
 
   fileSystems."/mnt/readyshare" = {

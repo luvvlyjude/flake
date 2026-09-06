@@ -1,12 +1,10 @@
 { pkgs, ... }:
 
 {
-  home-manager.sharedModules = [
+  hm.imports = [
     {
       programs.fuzzel = {
         enable = true;
-        # uncomment when codeberg back up and shi
-        package = pkgs.fuzzel-git;
 
         settings = {
           main = {

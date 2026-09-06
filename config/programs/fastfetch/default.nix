@@ -1,9 +1,5 @@
 {
-  home-manager.sharedModules = [
-    {
-      programs.fastfetch = {
-        enable = true;
-      };
-    }
-  ];
+  hm.programs.fastfetch = {
+    enable = true;
+  };
 }

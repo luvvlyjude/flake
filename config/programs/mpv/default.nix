@@ -1,11 +1,7 @@
 {
-  home-manager.sharedModules = [
-    {
-      programs.mpv = {
-        enable = true;
-        config = {
-        };
-      };
-    }
-  ];
+  hm.programs.mpv = {
+    enable = true;
+    config = {
+    };
+  };
 }

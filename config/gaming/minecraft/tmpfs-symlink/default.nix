@@ -1,22 +1,19 @@
-{ inputs, ... }:
+{ user, ... }:
 
 let
   mapWorlds = worlds: map (world: "mcsr/worlds/maps/${world}") worlds;
+  mkSaves = name: ".local/share/PrismLauncher/instances/${name}/minecraft/saves";
+  size = "15%";
 in
 {
-  imports = [
-    inputs.mcsr-nixos.nixosModules.tmpfs-symlink
-  ];
-
   services.tmpfs-symlink = {
     enable = true;
 
     instances = [
       {
-        saves = ".local/share/PrismLauncher/instances/seedqueue/minecraft/saves";
-        size = "15%";
+        inherit size user;
+        saves = mkSaves "seedqueue";
         tmpfs = true;
-        user = "jude";
         worlds = mapWorlds [
           "Z__1.16"
           "Z__allalalalal"

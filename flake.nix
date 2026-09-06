@@ -1,5 +1,5 @@
 {
-  description = "Jude's NixOS and Home-Manager Flake";
+  description = "Jude's Flake :3";
 
   inputs = {
     self.submodules = true;
@@ -30,7 +30,7 @@
     # used right now
     # used for quickly getting new features after a release before it hits nixpkgs
     bcachefs-tools = {
-      url = "github:koverstreet/bcachefs-tools";
+      url = "github:koverstreet/bcachefs-tools/v1.39.4";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.crane.follows = "crane";
       inputs.flake-parts.follows = "flake-parts";
@@ -58,6 +58,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.crane.follows = "crane";
       inputs.rust-overlay.follows = "rust-overlay";
+    };
+
+    jay-tray-item = {
+      url = "github:luvvlyjude/jay-tray-item";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     mcsr-nixos = {
@@ -94,6 +99,35 @@
       inherit (nixpkgs-unstable) lib;
       eachSystem = lib.genAttrs (import systems);
 
+      user = "jude";
+      mapNixosSystems =
+        nixosSystems:
+        lib.mapAttrs (
+          name:
+          { extraModules }:
+          lib.nixosSystem {
+            specialArgs = { inherit inputs user; };
+
+            modules = [
+              { networking.hostName = name; }
+              ./config/core
+              ./systems/${name}
+            ]
+            ++ extraModules;
+          }
+        ) nixosSystems;
+
+      # nixpkgs with this flake's overlays applied. The `packages` output goes
+      # through it so that `nix build .#foo` and the hosts, which apply the
+      # same overlay in ./system, cannot disagree about what `foo` is.
+      pkgsFor =
+        system:
+        import nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+          overlays = [ self.overlays.default ];
+        };
+
       treefmt =
         system:
         treefmt-nix.lib.evalModule nixpkgs-unstable.legacyPackages.${system} {
@@ -105,14 +139,12 @@
     {
       formatter = eachSystem (system: (treefmt system).config.build.wrapper);
 
-      # copied from Ktrompfl's flake
-
       # Custom modules
-      nixosModules = import ./modules/nixos;
-      homeManagerModules = import ./modules/home-manager;
+      nixosModules.default = import ./modules/nixos;
+      homeManagerModules.default = import ./modules/home-manager;
 
       # Your custom packages and modifications, exported as overlays
-      overlays = import ./overlays { inherit inputs; };
+      overlays.default = import ./overlays { inherit inputs; };
 
       # Your custom packages
       # Accessible through 'nix build', 'nix shell', etc
@@ -120,19 +152,13 @@
         system:
         import ./pkgs {
           inherit inputs;
-          pkgs = nixpkgs-unstable.legacyPackages.${system};
+          pkgs = pkgsFor system;
         }
       );
 
-      nixosConfigurations = {
-        luvvly-pc = lib.nixosSystem {
-          specialArgs = { inherit inputs; };
-
-          modules = [
-            ./systems/luvvly-pc
-            inputs.self.nixosModules
-            inputs.bcachefs-tools.nixosModules.default
-          ];
+      nixosConfigurations = mapNixosSystems {
+        luvvly-pc = {
+          extraModules = [ ];
         };
       };
     };

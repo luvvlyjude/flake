@@ -1,5 +1,5 @@
 {
-  home-manager.sharedModules = [
+  hm.imports = [
     (
       {
         inputs,

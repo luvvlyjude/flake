@@ -1,9 +1,7 @@
 {
-  home-manager.sharedModules = [
-    ({ pkgs, ... }: {
-      home.packages = with pkgs; [
-        spotify
-      ];
-    })
-  ];
+  hm = { pkgs, ... }: {
+    home.packages = with pkgs; [
+      spotify
+    ];
+  };
 }

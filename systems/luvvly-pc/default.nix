@@ -2,8 +2,7 @@
 
 {
   imports = [
-    ../../config/core/boot/efi.nix
-    ../../config/core/boot/systemd-boot.nix
+    ../../config/core
     ../../config/core/environment/etc
     ../../config/core/fonts.nix
     ../../config/core/hardware/nvidia.nix
@@ -13,13 +12,11 @@
     ../../config/core/network/ssh.nix
     ../../config/core/network/tailscale
     ../../config/core/nix-config
-    ../../config/core/overlays
     ../../config/core/packages/packages.nix
     ../../config/core/pam-limits
     ../../config/core/rtkit
     ../../config/core/sound/pipewire.nix
     ../../config/core/tty-config
-    ../../config/core/unfree-software
 
     ../../config/desktop/foot
     ../../config/desktop/fuzzel
@@ -56,14 +53,30 @@
     ../../config/programs/zen
     ../../config/programs/ydotool
 
-    ../../config/users/jude
-
     ./hardware-configuration.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  networking.hostName = "luvvly-pc";
+  boot = {
+    loader = {
+      # systemd-boot.enable = true;
+      limine = {
+        enable = true;
+        secureBoot = {
+          enable = true;
+          autoEnrollKeys = {
+            enable = true;
+            extraArgs = [
+              "--microsoft"
+              "--firmware-builtin"
+            ];
+          };
+          autoGenerateKeys = true;
+        };
+      };
+      efi.canTouchEfiVariables = true;
+    };
+    kernelPackages = pkgs.linuxPackages_latest;
+  };
 
   system.stateVersion = "26.05";
 }

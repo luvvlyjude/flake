@@ -1,14 +1,17 @@
-# copied from Ktrompfl's flake
-
 { inputs, ... }:
 
-{
+let
+  inherit (inputs.nixpkgs-unstable.lib) composeManyExtensions;
+
   # This one brings our custom packages from the 'pkgs' directory
   additions =
-    final: _prev:
+    final: prev:
     import ../pkgs {
-      inherit (final) pkgs;
+      pkgs = final;
       inherit inputs;
+    }
+    // {
+      jay-tray-item = inputs.jay-tray-item.packages.${prev.stdenv.hostPlatform.system}.default;
     };
 
   # This one contains whatever you want to overlay
@@ -20,7 +23,7 @@
     # });
 
     # fuzzel mouse index fix not out yet
-    fuzzel-git = prev.fuzzel.overrideAttrs (oldAttrs: rec {
+    fuzzel = prev.fuzzel.overrideAttrs (oldAttrs: rec {
       version = "unstable-302f228b";
       src = prev.fetchFromCodeberg {
         owner = "dnkl";
@@ -40,4 +43,14 @@
       '';
     });
   };
-}
+in
+composeManyExtensions [
+  additions
+  modifications
+
+  inputs.bcachefs-tools.overlays.default
+  inputs.jay.overlays.default
+
+  inputs.ktrompfl.overlays.default
+  inputs.ktrompfl-old.overlays.additions
+]

@@ -1,14 +1,10 @@
 {
-  home-manager.sharedModules = [
-    {
-      programs.neovim = {
-        enable = true;
-        viAlias = true;
-        vimAlias = true;
-        vimdiffAlias = true;
+  hm.programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
 
-        defaultEditor = true; # set nvim default with $EDITOR session variable
-      };
-    }
-  ];
+    defaultEditor = true; # set nvim default with $EDITOR session variable
+  };
 }
