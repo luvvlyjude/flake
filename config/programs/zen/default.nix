@@ -20,6 +20,7 @@
 
           settings = {
             "general.autoScroll" = true;
+            "browser.ctrlTab.sortByRecentlyUsed" = true;
             "zen.pinned-tab-manager.restore-pinned-tabs-to-pinned-url" = true;
             "zen.tabs.show-newtab-vertical" = false;
             "zen.theme.content-element-separation" = 0;
