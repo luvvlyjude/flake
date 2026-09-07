@@ -48,7 +48,7 @@ in
 
   on-graphics-initialized = [
     (multi [
-      (exec pkgs.jay-tray-power)
+      (exec (lib.getExe pkgs.jay-tray-power))
       (moveToOutput { output.name = "left"; })
     ])
     (exec { shell = "sleep 0.25; discord"; })
