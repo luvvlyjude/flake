@@ -50,6 +50,7 @@ composeManyExtensions [
 
   inputs.bcachefs-tools.overlays.default
   inputs.jay.overlays.default
+  inputs.jay-screenshot.overlays.default
 
   inputs.ktrompfl.overlays.default
 ]

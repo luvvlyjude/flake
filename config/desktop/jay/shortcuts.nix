@@ -86,11 +86,10 @@ let
   );
 
   screenshotOf =
-    mode:
+    args:
     exec {
-      shell =
-        "${lib.getExe pkgs.jay-screenshot} ${mode} "
-        + (lib.optionalString (mode == "region") "\"$(${lib.getExe pkgs.slurp} -d)\"");
+      prog = lib.getExe pkgs.jay-screenshot-tool;
+      inherit args;
     };
 in
 rec {
@@ -123,7 +122,10 @@ rec {
       "${mod}-Return" = exec "footclient";
       "${mod}-r" = exec "fuzzel";
 
-      "${mod}-shift-s" = screenshotOf "region";
+      "${mod}-shift-s" = screenshotOf [
+        "region"
+        "--select"
+      ];
 
       # player
       XF86AudioPlay = mkPlayerctl "play-pause";

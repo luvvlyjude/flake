@@ -16,6 +16,7 @@
       inputs.rust-overlay.follows = "rust-overlay";
       inputs.jay.follows = "jay";
       inputs.systems.follows = "systems";
+      inputs.jay-screenshot.follows = "jay-screenshot";
     };
 
     # used right now
@@ -49,6 +50,12 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.crane.follows = "crane";
       inputs.rust-overlay.follows = "rust-overlay";
+    };
+
+    jay-screenshot = {
+      url = "github:Ktrompfl/jay-screenshot";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.jay.follows = "jay";
     };
 
     jay-tray-item = {

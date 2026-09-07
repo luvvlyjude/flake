@@ -1,6 +1,11 @@
 { pkgs, ... }:
 
+let
+  inherit (pkgs) callPackage;
+  jayScripts = callPackage ./jay-scripts { };
+in
 {
-  glfw-waywall = pkgs.callPackage ./glfw-waywall/package.nix { };
-  jay-tray-power = pkgs.callPackage ./jay-tray-power/package.nix { };
+  inherit (jayScripts) jay-screenshot-tool jay-tray-power;
+
+  glfw-waywall = callPackage ./glfw-waywall { };
 }

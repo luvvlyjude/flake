@@ -293,6 +293,29 @@
         "type": "github"
       }
     },
+    "jay-screenshot": {
+      "inputs": {
+        "jay": [
+          "jay"
+        ],
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788775595,
+        "narHash": "sha256-ixxNnBRdff56LmXEjMD/x+oEz81m4lYgT3t54CmVMxw=",
+        "owner": "Ktrompfl",
+        "repo": "jay-screenshot",
+        "rev": "d6d04052743e405d98023d6f86c282a2657ad979",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Ktrompfl",
+        "repo": "jay-screenshot",
+        "type": "github"
+      }
+    },
     "jay-tray-item": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -544,6 +567,7 @@
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "jay": "jay",
+        "jay-screenshot": "jay-screenshot",
         "jay-tray-item": "jay-tray-item",
         "ktrompfl": "ktrompfl",
         "mcsr-nixos": "mcsr-nixos",
