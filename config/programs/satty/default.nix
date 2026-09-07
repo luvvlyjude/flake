@@ -4,10 +4,14 @@
 
     settings = {
       general = {
+        copy-command = "wl-copy";
         disable-notifications = true;
-        brush-smooth-history-size = 3;
         default-hide-toolbars = true;
         initial-tool = "brush";
+        actions-on-escape = [
+          "save-to-clipboard"
+          "exit"
+        ];
       };
     };
   };
