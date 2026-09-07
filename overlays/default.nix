@@ -52,5 +52,4 @@ composeManyExtensions [
   inputs.jay.overlays.default
 
   inputs.ktrompfl.overlays.default
-  inputs.ktrompfl-old.overlays.additions
 ]
