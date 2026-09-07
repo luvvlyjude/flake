@@ -17,7 +17,6 @@
     xwayland.enable = true;
 
     extraPackages = with pkgs; [
-      mako
     ];
   };
 

@@ -23,6 +23,7 @@
     ../../config/desktop/i3status-rust
     ../../config/desktop/jay
     ../../config/desktop/theming
+    ../../config/desktop/swaync
     ../../config/desktop/xdg
 
     ../../config/gaming/gamemode
