@@ -4,12 +4,11 @@
 
     settings = {
       general = {
-        copy-command = "wl-copy";
         disable-notifications = true;
         default-hide-toolbars = true;
         initial-tool = "brush";
         actions-on-escape = [
-          "save-to-clipboard"
+          "save-to-file"
           "exit"
         ];
       };

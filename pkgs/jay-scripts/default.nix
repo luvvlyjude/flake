@@ -8,6 +8,7 @@
   procps,
   satty,
   systemd,
+  wl-clipboard,
   writeShellApplication,
   writeShellScript,
   fuzzelOutput ? "DP-2",
@@ -37,6 +38,7 @@ in
       jay-screenshot
       libnotify
       satty
+      wl-clipboard
     ];
     text =
       let
@@ -76,7 +78,9 @@ in
         case "$action" in
           edit)
             saved=$(save "$shot")
-            satty --filename "$saved" --output-filename "''${saved%.png}-edited.png"
+            edited="''${saved%.png}-edited.png"
+            satty --filename "$saved" --output-filename "$edited"
+            wl-copy --type image/png < "$edited"
             ;;
           save)
             saved=$(save "$shot")
