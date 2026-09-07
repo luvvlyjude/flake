@@ -12,6 +12,7 @@
       url = "github:Ktrompfl/nix-config";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.crane.follows = "crane";
+      inputs.flake-compat.follows = "flake-compat";
       inputs.flake-parts.follows = "flake-parts";
       inputs.rust-overlay.follows = "rust-overlay";
       inputs.jay.follows = "jay";
@@ -25,6 +26,7 @@
       url = "github:koverstreet/bcachefs-tools/v1.39.4";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.crane.follows = "crane";
+      inputs.flake-compat.follows = "flake-compat";
       inputs.flake-parts.follows = "flake-parts";
       inputs.rust-overlay.follows = "rust-overlay";
       inputs.treefmt-nix.follows = "treefmt-nix";
@@ -32,6 +34,10 @@
 
     crane = {
       url = "github:ipetkov/crane";
+    };
+
+    flake-compat = {
+      url = "github:NixOS/flake-compat";
     };
 
     flake-parts = {
