@@ -4,6 +4,6 @@
   programs.nh = {
     enable = true;
 
-    flake = "${config.users.users.${user}.home}/projects/flake";
+    flake = "${config.users.users.${user}.home}/Projects/flake";
   };
 }
