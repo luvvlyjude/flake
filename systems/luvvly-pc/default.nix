@@ -54,6 +54,7 @@
     ../../config/programs/wev
     ../../config/programs/zen
     ../../config/programs/ydotool
+    ../../config/programs/zed
 
     ./hardware-configuration.nix
   ];
