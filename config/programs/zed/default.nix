@@ -30,14 +30,15 @@
         userSettings = {
           base_keymap = "VSCode";
 
-          vim_mode = true;
-
           theme = {
             mode = "dark";
             dark = "Dark OLED";
           };
+          colorize_brackets = true;
 
-          show_edit_predictions = false;
+          vim_mode = true;
+          relative_line_numbers = "enabled";
+          vertical_scroll_margin = 10;
 
           project_panel = {
             dock = "right";
@@ -57,10 +58,10 @@
               formatter.external = {
                 command = lib.getExe pkgs.nixfmt;
               };
+              format_on_save = true;
               language_servers = [
                 "!nil"
                 "nixd"
-                "..."
               ];
               tab_size = 2;
             };
@@ -116,6 +117,8 @@
             enabled = true;
             delay_ms = 750;
           };
+
+          show_edit_predictions = false;
 
           telemetry = {
             diagnostics = false;
