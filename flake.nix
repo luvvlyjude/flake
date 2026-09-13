@@ -132,16 +132,41 @@
           overlays = [ self.overlays.default ];
         };
 
-      treefmt =
+      treefmtFor = eachSystem (
         system:
-        treefmt-nix.lib.evalModule nixpkgs-unstable.legacyPackages.${system} {
+        treefmt-nix.lib.evalModule (pkgsFor system) {
           projectRootFile = "flake.nix";
           programs.nixfmt.enable = true;
           programs.stylua.enable = true;
-        };
+
+          settings.global.excludes = [
+            "config/gaming/minecraft/waywall/waywall-config/ww_temporary_ninbot/**"
+          ];
+        }
+      );
     in
     {
-      formatter = eachSystem (system: (treefmt system).config.build.wrapper);
+      checks = eachSystem (
+        system:
+        let
+          pkgs = pkgsFor system;
+        in
+        {
+          formatting = treefmtFor.${system}.config.build.check self;
+
+          statix = pkgs.runCommandLocal "check-statix" { } ''
+            ${lib.getExe pkgs.statix} check ${self}
+            touch $out
+          '';
+
+          deadnix = pkgs.runCommandLocal "check-deadnix" { } ''
+            ${lib.getExe pkgs.deadnix} --fail ${self}
+            touch $out
+          '';
+        }
+      );
+
+      formatter = eachSystem (system: treefmtFor.${system}.config.build.wrapper);
 
       # Custom modules
       nixosModules.default = import ./modules/nixos;
