@@ -145,6 +145,7 @@
           programs.nixfmt.enable = true;
           programs.stylua.enable = true;
 
+          # external submodule
           settings.global.excludes = [
             "config/gaming/minecraft/waywall/waywall-config/ww_temporary_ninbot/**"
           ];
