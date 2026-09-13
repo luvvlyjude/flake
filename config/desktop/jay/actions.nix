@@ -1,7 +1,7 @@
 { jayLib, ... }:
 
 let
-  inherit (jayLib) jumpToMark showWorkspace;
+  inherit (jayLib) jumpToMark;
 in
 {
   actions = {

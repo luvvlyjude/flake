@@ -23,9 +23,15 @@
   hm =
     hm:
     let
-      inherit (lib) getExe;
-
-      jayLib = import ./jayLib.nix { };
+      jayLib = import ./jayLib.nix;
+      partArgs = {
+        inherit
+          hm
+          jayLib
+          lib
+          pkgs
+          ;
+      };
 
       # Each part is a plain expression that returns its piece of `settings`, not
       # a module, so nothing merges them for us: `mergeDisjoint` below is what
@@ -45,14 +51,10 @@
 
       importPart =
         part:
-        import part {
-          inherit
-            hm
-            jayLib
-            lib
-            pkgs
-            ;
-        };
+        let
+          value = import part;
+        in
+        if lib.isFunction value then value partArgs else value;
 
       mergeDisjoint =
         parts:

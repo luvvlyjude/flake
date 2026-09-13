@@ -1,6 +1,4 @@
 # yoinked this idea straight from ktrompfl B)
-{ }:
-
 rec {
   # --- action constructors ---
   #

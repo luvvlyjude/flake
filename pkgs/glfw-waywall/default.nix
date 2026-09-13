@@ -17,7 +17,7 @@
   withLibdecor ? false,
 }:
 
-stdenv.mkDerivation (finalAttrs: {
+stdenv.mkDerivation (_finalAttrs: {
   pname = "glfw-waywall";
   version = "3.5.0-unstable-2026-07-09";
 

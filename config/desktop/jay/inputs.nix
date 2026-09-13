@@ -1,5 +1,3 @@
-{ ... }:
-
 {
   # see https://wiki.archlinux.org/title/X_keyboard_extension for xkb keymap settings
   keymap = ''

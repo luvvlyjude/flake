@@ -18,7 +18,6 @@ let
   inherit (lib)
     concatMapStringsSep
     escapeShellArg
-    getExe
     toLower
     ;
 

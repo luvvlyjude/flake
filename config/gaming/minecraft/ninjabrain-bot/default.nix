@@ -2,7 +2,6 @@
   hm.imports = [
     (
       {
-        config,
         lib,
         pkgs,
         ...

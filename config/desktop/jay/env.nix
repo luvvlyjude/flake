@@ -1,5 +1,3 @@
-{ ... }:
-
 {
   env = {
     GDK_BACKEND = "wayland";

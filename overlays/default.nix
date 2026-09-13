@@ -17,13 +17,14 @@ let
   # This one contains whatever you want to overlay
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
+  # deadnix: skip
   modifications = final: prev: {
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
 
     # fuzzel mouse index fix not out yet
-    fuzzel = prev.fuzzel.overrideAttrs (oldAttrs: rec {
+    fuzzel = prev.fuzzel.overrideAttrs (_oldAttrs: rec {
       version = "unstable-302f228b";
       src = prev.fetchFromCodeberg {
         owner = "dnkl";

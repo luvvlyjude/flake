@@ -1,8 +1,6 @@
 {
   config,
-  inputs,
   lib,
-  pkgs,
   modulesPath,
   ...
 }:
@@ -12,50 +10,54 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = [
-    "nvme"
-    "xhci_pci"
-    "ahci"
-    "usb_storage"
-    "usbhid"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
-  boot.extraModulePackages = [ ];
-  boot.blacklistedKernelModules = [
-    # disable module for unused 2070 SUPER GPU USB-C controller
-    "ucsi_ccg"
-  ];
+  boot = {
+    initrd.availableKernelModules = [
+      "nvme"
+      "xhci_pci"
+      "ahci"
+      "usb_storage"
+      "usbhid"
+      "sd_mod"
+    ];
+    initrd.kernelModules = [ ];
+    kernelModules = [ ];
+    extraModulePackages = [ ];
+    blacklistedKernelModules = [
+      # disable module for unused 2070 SUPER GPU USB-C controller
+      "ucsi_ccg"
+    ];
 
-  boot.kernelParams = [
-    # dont touch BIOS configured ASPM value
-    "pcie_aspm=off"
-  ];
-
-  fileSystems."/" = {
-    device = "UUID=70fdf5d5-4f7c-4def-b8eb-6df5f6da441d";
-    fsType = "bcachefs";
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/1926-4056";
-    fsType = "vfat";
-    options = [
-      "fmask=0077"
-      "dmask=0077"
+    kernelParams = [
+      # dont touch BIOS configured ASPM value
+      "pcie_aspm=off"
     ];
   };
 
-  fileSystems."/mnt/readyshare" = {
-    device = "//192.168.1.1/USB_Storage";
-    fsType = "cifs";
-    options = [
-      "guest"
-      "uid=1000"
-      "gid=100"
-      "_netdev"
-    ];
+  fileSystems = {
+    "/" = {
+      device = "UUID=70fdf5d5-4f7c-4def-b8eb-6df5f6da441d";
+      fsType = "bcachefs";
+    };
+
+    "/boot" = {
+      device = "/dev/disk/by-uuid/1926-4056";
+      fsType = "vfat";
+      options = [
+        "fmask=0077"
+        "dmask=0077"
+      ];
+    };
+
+    "/mnt/readyshare" = {
+      device = "//192.168.1.1/USB_Storage";
+      fsType = "cifs";
+      options = [
+        "guest"
+        "uid=1000"
+        "gid=100"
+        "_netdev"
+      ];
+    };
   };
 
   swapDevices = [

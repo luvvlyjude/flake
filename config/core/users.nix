@@ -1,4 +1,4 @@
-{ inputs, user, ... }:
+{ user, ... }:
 
 {
   users = {

@@ -10,26 +10,30 @@
 
     ktrompfl = {
       url = "github:Ktrompfl/nix-config";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.crane.follows = "crane";
-      inputs.flake-compat.follows = "flake-compat";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.rust-overlay.follows = "rust-overlay";
-      inputs.jay.follows = "jay";
-      inputs.systems.follows = "systems";
-      inputs.jay-screenshot.follows = "jay-screenshot";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+        crane.follows = "crane";
+        flake-compat.follows = "flake-compat";
+        flake-parts.follows = "flake-parts";
+        rust-overlay.follows = "rust-overlay";
+        jay.follows = "jay";
+        systems.follows = "systems";
+        jay-screenshot.follows = "jay-screenshot";
+      };
     };
 
     # used right now
     # used for quickly getting new features after a release before it hits nixpkgs
     bcachefs-tools = {
-      url = "github:koverstreet/bcachefs-tools/v1.39.4";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.crane.follows = "crane";
-      inputs.flake-compat.follows = "flake-compat";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.rust-overlay.follows = "rust-overlay";
-      inputs.treefmt-nix.follows = "treefmt-nix";
+      url = "github:koverstreet/bcachefs-tools/v1.39.6";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+        crane.follows = "crane";
+        flake-compat.follows = "flake-compat";
+        flake-parts.follows = "flake-parts";
+        rust-overlay.follows = "rust-overlay";
+        treefmt-nix.follows = "treefmt-nix";
+      };
     };
 
     crane = {
@@ -53,9 +57,11 @@
 
     jay = {
       url = "github:mahkoh/jay";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.crane.follows = "crane";
-      inputs.rust-overlay.follows = "rust-overlay";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+        crane.follows = "crane";
+        rust-overlay.follows = "rust-overlay";
+      };
     };
 
     jay-screenshot = {
