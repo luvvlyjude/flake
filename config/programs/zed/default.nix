@@ -1,6 +1,13 @@
 {
   hm =
-    { lib, pkgs, ... }:
+    {
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      inherit (lib) getExe;
+    in
     {
       programs.zed-editor = {
         enable = true;
@@ -29,17 +36,18 @@
 
         userSettings = {
           base_keymap = "VSCode";
+          vim_mode = true;
+          middle_click_paste = false;
 
-          theme = {
-            mode = "dark";
-            dark = "Dark OLED";
-          };
+          theme = "Dark OLED";
           colorize_brackets = true;
 
-          vim_mode = true;
           relative_line_numbers = "enabled";
           vertical_scroll_margin = 10;
 
+          agent = {
+            dock = "right";
+          };
           project_panel = {
             dock = "right";
           };
@@ -56,12 +64,13 @@
           languages = {
             Nix = {
               formatter.external = {
-                command = lib.getExe pkgs.nixfmt;
+                command = getExe pkgs.nixfmt;
               };
-              format_on_save = true;
+              format_on_save = "on";
               language_servers = [
                 "!nil"
                 "nixd"
+                "..."
               ];
               tab_size = 2;
             };
@@ -69,49 +78,26 @@
 
           lsp = {
             nixd = {
-              binary.path = lib.getExe pkgs.nixd;
-              settings.nixd = {
+              binary.path = getExe pkgs.nixd;
+              settings = {
                 nixpkgs.expr = "import <nixpkgs> {}";
-                formatting.command = [ (lib.getExe pkgs.nixfmt) ];
-                # options = {
-                #   nixos = {
-                #     expr = "(builtins.getFlake \"/home/lyc/flakes\").nixosConfigurations.adrastea.options";
-                #   };
+                formatting.command = [ (getExe pkgs.nixfmt) ];
+                options = {
+                  nixos = {
+                    expr = "(builtins.getFlake \"/home/jude/Projects/flake\").nixosConfigurations.luvvly-pc.options";
+                  };
 
-                #   home-manager = {
-                #     expr = "(builtins.getFlake \"/home/lyc/flakes\").homeConfigurations.\"lyc@adrastea\".options";
-                #   };
-                # };
+                  home-manager = {
+                    expr = "(builtins.getFlake \"/home/jude/Projects/flake\").nixosConfigurations.luvvly-pc.options.home-manager.users.type.getSubOptions []";
+                  };
+                };
               };
             };
-          };
-
-          agent = {
-            dock = "left";
           };
 
           title_bar = {
             show_sign_in = false;
           };
-
-          ssh_connections = [
-            {
-              host = "luvvly-pc";
-              username = "jude";
-              projects = [
-                {
-                  paths = [
-                    "/home/jude/Projects/flake"
-                  ];
-                }
-                {
-                  paths = [
-                    "/home/jude/Projects/mcsr-nixos"
-                  ];
-                }
-              ];
-            }
-          ];
 
           which_key = {
             enabled = true;
