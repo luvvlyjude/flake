@@ -4,6 +4,7 @@
       config,
       inputs,
       lib,
+      osConfig,
       pkgs,
       ...
     }:
@@ -11,6 +12,9 @@
       inherit (lib) getExe;
 
       llm-packages = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
+
+      # nixd option completion for NixOS and home-manager options
+      flakeOptions = "(builtins.getFlake \"${osConfig.programs.nh.flake}\").nixosConfigurations.${osConfig.networking.hostName}.options";
     in
     {
       programs.zed-editor = {
@@ -100,11 +104,11 @@
                 formatting.command = [ (getExe pkgs.nixfmt) ];
                 options = {
                   nixos = {
-                    expr = "(builtins.getFlake \"/home/jude/Projects/flake\").nixosConfigurations.luvvly-pc.options";
+                    expr = flakeOptions;
                   };
 
                   home-manager = {
-                    expr = "(builtins.getFlake \"/home/jude/Projects/flake\").nixosConfigurations.luvvly-pc.options.home-manager.users.type.getSubOptions []";
+                    expr = "${flakeOptions}.home-manager.users.type.getSubOptions []";
                   };
                 };
               };
