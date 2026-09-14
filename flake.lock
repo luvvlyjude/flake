@@ -13,7 +13,7 @@
         ],
         "nix-github-actions": "nix-github-actions",
         "nixpkgs": [
-          "nixpkgs-unstable"
+          "nixpkgs"
         ],
         "rust-overlay": [
           "rust-overlay"
@@ -163,7 +163,7 @@
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
-          "nixpkgs-unstable"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -290,7 +290,7 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-unstable"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -313,7 +313,7 @@
           "crane"
         ],
         "nixpkgs": [
-          "nixpkgs-unstable"
+          "nixpkgs"
         ],
         "rust-overlay": [
           "rust-overlay"
@@ -339,7 +339,7 @@
           "jay"
         ],
         "nixpkgs": [
-          "nixpkgs-unstable"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -360,7 +360,7 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": [
-          "nixpkgs-unstable"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -400,7 +400,7 @@
         "llm-agents": "llm-agents",
         "nix-mineral": "nix-mineral",
         "nixpkgs": [
-          "nixpkgs-unstable"
+          "nixpkgs"
         ],
         "nur": "nur",
         "preservation": "preservation",
@@ -474,7 +474,7 @@
     "mcsr-nixos": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-unstable"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -555,38 +555,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-stable": {
-      "locked": {
-        "lastModified": 1789114715,
-        "narHash": "sha256-ugpsyk3NM2s87vXfUiIIiibbJ4Pp0JPS5p/3mfs+q+c=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "21a67dc470149f337cecafbe965d8d252a390518",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-26.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-unstable": {
-      "locked": {
-        "lastModified": 1789149629,
-        "narHash": "sha256-H6GwaZzZf+4npqv0tph94w9tZddSjFjmQrVsW0z78uk=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "eaad089433ca2bb662274377d33df3d0e51ef28b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1789073787,
@@ -599,6 +567,22 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1789149629,
+        "narHash": "sha256-H6GwaZzZf+4npqv0tph94w9tZddSjFjmQrVsW0z78uk=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "eaad089433ca2bb662274377d33df3d0e51ef28b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -656,8 +640,7 @@
         "ktrompfl": "ktrompfl",
         "llm-agents": "llm-agents_2",
         "mcsr-nixos": "mcsr-nixos",
-        "nixpkgs-stable": "nixpkgs-stable",
-        "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixpkgs": "nixpkgs_3",
         "rust-overlay": "rust-overlay",
         "systems": "systems_4",
         "treefmt-nix": "treefmt-nix_3",
@@ -667,7 +650,7 @@
     "rust-overlay": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-unstable"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -836,7 +819,7 @@
     "treefmt-nix_3": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-unstable"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -859,7 +842,7 @@
           "home-manager"
         ],
         "nixpkgs": [
-          "nixpkgs-unstable"
+          "nixpkgs"
         ]
       },
       "locked": {

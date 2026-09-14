@@ -4,14 +4,13 @@
   inputs = {
     self.submodules = true;
 
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/x86_64-linux";
 
     ktrompfl = {
       url = "github:Ktrompfl/nix-config";
       inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
+        nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
         flake-compat.follows = "flake-compat";
         flake-parts.follows = "flake-parts";
@@ -27,7 +26,7 @@
     bcachefs-tools = {
       url = "github:koverstreet/bcachefs-tools/v1.39.6";
       inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
+        nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
         flake-compat.follows = "flake-compat";
         flake-parts.follows = "flake-parts";
@@ -46,19 +45,19 @@
 
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs-unstable";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
     home-manager = {
       # home-manager/master for unstable | home-manager/nixos-##.## for stable
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     jay = {
       url = "github:mahkoh/jay";
       inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
+        nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
         rust-overlay.follows = "rust-overlay";
       };
@@ -66,13 +65,13 @@
 
     jay-screenshot = {
       url = "github:Ktrompfl/jay-screenshot";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.jay.follows = "jay";
     };
 
     jay-tray-item = {
       url = "github:luvvlyjude/jay-tray-item";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # omitting follows costs a second nixpkgs evaluation but guarantees binary cache hits
@@ -80,22 +79,22 @@
 
     mcsr-nixos = {
       url = "https://git.uku3lig.net/luvvlyjude/mcsr-nixos/archive/tmpfs-symlink.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
   };
@@ -103,13 +102,13 @@
   outputs =
     inputs@{
       self,
-      nixpkgs-unstable,
+      nixpkgs,
       systems,
       treefmt-nix,
       ...
     }:
     let
-      inherit (nixpkgs-unstable) lib;
+      inherit (nixpkgs) lib;
       eachSystem = lib.genAttrs (import systems);
 
       user = "jude";
@@ -135,7 +134,7 @@
       # same overlay in ./system, cannot disagree about what `foo` is.
       pkgsFor =
         system:
-        import nixpkgs-unstable {
+        import nixpkgs {
           inherit system;
           config.allowUnfree = true;
           overlays = [ self.overlays.default ];

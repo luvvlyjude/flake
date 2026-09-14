@@ -1,7 +1,7 @@
 { inputs, ... }:
 
 let
-  inherit (inputs.nixpkgs-unstable.lib) composeManyExtensions;
+  inherit (inputs.nixpkgs.lib) composeManyExtensions;
 
   # This one brings our custom packages from the 'pkgs' directory
   additions =
