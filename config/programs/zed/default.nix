@@ -1,6 +1,7 @@
 {
   hm =
     {
+      config,
       inputs,
       lib,
       pkgs,
@@ -71,6 +72,7 @@
               env = {
                 # use wrapped claude code package to make configured plugins (e.g. language servers) available
                 CLAUDE_CODE_EXECUTABLE = getExe llm-packages.claude-code;
+                TMPDIR = config.programs.claude-code.settings.env.TMPDIR;
               };
             };
           };
