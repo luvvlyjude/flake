@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ../../config/core
     ../../config/core/environment/etc
     ../../config/core/fonts.nix
     ../../config/core/hardware/nvidia.nix
@@ -36,6 +35,7 @@
 
     ../../config/programs/bash
     ../../config/programs/btop
+    ../../config/programs/claude
     ../../config/programs/discord
     ../../config/programs/fastfetch
     ../../config/programs/gh

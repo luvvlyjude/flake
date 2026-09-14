@@ -75,6 +75,9 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # omitting follows costs a second nixpkgs evaluation but guarantees binary cache hits
+    llm-agents.url = "github:numtide/llm-agents.nix";
+
     mcsr-nixos = {
       url = "https://git.uku3lig.net/luvvlyjude/mcsr-nixos/archive/tmpfs-symlink.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs-unstable";

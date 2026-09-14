@@ -1,12 +1,15 @@
 {
   hm =
     {
+      inputs,
       lib,
       pkgs,
       ...
     }:
     let
       inherit (lib) getExe;
+
+      llm-packages = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
     in
     {
       programs.zed-editor = {
@@ -59,6 +62,17 @@
           };
           git_panel = {
             dock = "right";
+          };
+
+          agent_servers = {
+            claude-acp = {
+              type = "custom";
+              command = getExe llm-packages.claude-agent-acp;
+              env = {
+                # use wrapped claude code package to make configured plugins (e.g. language servers) available
+                CLAUDE_CODE_EXECUTABLE = getExe llm-packages.claude-code;
+              };
+            };
           };
 
           languages = {

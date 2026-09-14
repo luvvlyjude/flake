@@ -24,6 +24,10 @@
       };
     };
 
+    ignores = [
+      "**/.claude/.cc-writes"
+    ];
+
     signing = {
       format = "ssh";
       key = "~/.ssh/id_ed25519.pub";
