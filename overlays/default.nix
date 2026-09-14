@@ -12,6 +12,11 @@ let
     }
     // {
       jay-tray-item = inputs.jay-tray-item.packages.${prev.stdenv.hostPlatform.system}.default;
+
+      ninjabrain-box = final.callPackage "${inputs.ktrompfl}/pkgs/ninjabrain-box" {
+        inherit inputs;
+        pkgs = final;
+      };
     };
 
   # This one contains whatever you want to overlay
@@ -41,6 +46,4 @@ composeManyExtensions [
   inputs.bcachefs-tools.overlays.default
   inputs.jay.overlays.default
   inputs.jay-screenshot.overlays.default
-
-  inputs.ktrompfl.overlays.default
 ]

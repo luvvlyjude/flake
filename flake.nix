@@ -7,18 +7,10 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/x86_64-linux";
 
+    # source only, for pkgs/ninjabrain-box (see ./overlays)
     ktrompfl = {
       url = "github:Ktrompfl/nix-config";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        crane.follows = "crane";
-        flake-compat.follows = "flake-compat";
-        flake-parts.follows = "flake-parts";
-        rust-overlay.follows = "rust-overlay";
-        jay.follows = "jay";
-        systems.follows = "systems";
-        jay-screenshot.follows = "jay-screenshot";
-      };
+      flake = false;
     };
 
     # used right now
