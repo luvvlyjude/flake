@@ -22,6 +22,8 @@ in
   gfx-api = "Vulkan";
   use-hardware-cursor = false;
 
+  auto-reload = true;
+
   unstable-mouse-follows-focus = true;
 
   idle.minutes = 0;
