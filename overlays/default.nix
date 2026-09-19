@@ -1,23 +1,50 @@
-{ inputs, ... }:
+{
+  inputs,
+  lib,
+  luvvlyLib,
+  ...
+}:
 
 let
-  inherit (inputs.nixpkgs.lib) composeManyExtensions;
+  inherit (lib) composeManyExtensions mapAttrs;
+in
+rec {
+  # all overlays combined
+  default = composeManyExtensions [
+    additions
+    external
+    modifications
 
-  # This one brings our custom packages from the 'pkgs' directory
+    inputs.bcachefs-tools.overlays.default
+    inputs.jay.overlays.default
+    inputs.jay-screenshot.overlays.default
+  ];
+
+  # collect all custom packages from '../packages' directory, flat at any depth
   additions =
-    final: prev:
-    import ../pkgs {
-      pkgs = final;
-      inherit inputs;
-    }
-    // {
-      jay-tray-item = inputs.jay-tray-item.packages.${prev.stdenv.hostPlatform.system}.default;
+    final: _prev:
+    let
+      # let custom packages access inputs or luvvlyLib if they need
+      callPackage = final.newScope { inherit inputs luvvlyLib; };
+    in
+    mapAttrs (_name: path: callPackage path { }) (
+      luvvlyLib.collectNixFiles {
+        directory = ../packages;
+        marker = "package.nix";
+      }
+    );
 
-      ninjabrain-box = final.callPackage "${inputs.ktrompfl}/pkgs/ninjabrain-box" {
-        inherit inputs;
-        pkgs = final;
-      };
+  # packages to overlay from external sources
+  external = final: prev: {
+    # does not expose its own overlay
+    jay-tray-item = inputs.jay-tray-item.packages.${prev.stdenv.hostPlatform.system}.default;
+
+    # while ktrompfl's flake has outputs, including it as an input brings in many other inputs
+    ninjabrain-box = final.callPackage "${inputs.ktrompfl}/pkgs/ninjabrain-box" {
+      inherit inputs;
+      pkgs = final;
     };
+  };
 
   # This one contains whatever you want to overlay
   # You can change versions, add patches, set compilation flags, anything really.
@@ -38,12 +65,4 @@ let
       '';
     });
   };
-in
-composeManyExtensions [
-  additions
-  modifications
-
-  inputs.bcachefs-tools.overlays.default
-  inputs.jay.overlays.default
-  inputs.jay-screenshot.overlays.default
-]
+}

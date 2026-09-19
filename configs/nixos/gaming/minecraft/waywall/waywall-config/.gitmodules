@@ -1,0 +1,3 @@
+[submodule "ww_temporary_ninbot"]
+	path = ww_temporary_ninbot
+	url = https://github.com/arjuncgore/ww_temporary_ninbot.git
