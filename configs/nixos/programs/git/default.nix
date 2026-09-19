@@ -25,7 +25,7 @@
     };
 
     ignores = [
-      "**/.claude/.cc-writes"
+      "**/.claude/*"
     ];
 
     signing = {
