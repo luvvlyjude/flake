@@ -11,7 +11,10 @@ workspace: {
     "WebFetch(domain:raw.githubusercontent.com)"
     "WebFetch(domain:docs.rs)"
     "WebFetch(domain:devenv.sh)"
+    "WebFetch(domain:classifier.dev)"
 
+    # Remote MCP servers do not get the `plugin_hm_` namespace that stdio ones do.
+    "mcp__classifier__*"
     "mcp__plugin_hm_nixos__*"
   ];
 

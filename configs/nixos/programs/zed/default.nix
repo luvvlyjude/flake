@@ -22,6 +22,8 @@
 
         installRemoteServer = true;
 
+        enableMcpIntegration = true;
+
         extensions = [
           "dark-oled"
           "nix"

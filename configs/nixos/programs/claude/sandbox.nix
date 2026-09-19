@@ -33,6 +33,7 @@ workspace: {
       "pypi.org"
       "files.pythonhosted.org"
 
+      "classifier.dev"
       "context7.com"
       "*.context7.com"
       "devenv.sh"

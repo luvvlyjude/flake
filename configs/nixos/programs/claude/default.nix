@@ -32,7 +32,11 @@
           theme = "dark";
         };
 
-        skills = import ./skills.nix;
+        enableMcpIntegration = true;
+
+        skills = import ./skills.nix {
+          inherit lib pkgs;
+        };
 
         lspServers = {
           nixd = {
@@ -64,6 +68,7 @@
 
         # extra utilities
         pkgs.ast-grep
+        pkgs.classifier-dev
         pkgs.ripgrep
         pkgs.bubblewrap
         pkgs.socat

@@ -44,6 +44,7 @@
     ../../programs/gh
     ../../programs/git
     ../../programs/imv
+    ../../programs/mcp
     ../../programs/mpv
     ../../programs/ncdu
     ../../programs/neovim
