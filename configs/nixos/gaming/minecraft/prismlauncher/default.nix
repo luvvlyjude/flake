@@ -40,7 +40,7 @@
             IgnoreJavaCompatibility = true;
             IgnoreJavaWizard = true;
             JavaPath = "${lib.getBin mcsrPkgs.graalvm-21}/bin/java";
-            JvmArgs = "-XX:+UseZGC -XX:+AlwaysPreTouch";
+            JvmArgs = "-XX:+UseZGC -XX:+AlwaysPreTouch -Dgraal.TuneInlinerExploration=1 -XX:NmethodSweepActivity=1";
             MaxMemAlloc = 4096;
             MinMemAlloc = 4096;
             UseNativeGLFW = true;

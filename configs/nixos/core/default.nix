@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  luvvlyLib,
   user,
   ...
 }:
@@ -11,6 +12,7 @@ in
 {
   imports = [
     inputs.self.nixosModules.default
+
     inputs.bcachefs-tools.nixosModules.default
     inputs.home-manager.nixosModules.home-manager
     inputs.jay.nixosModules.default
@@ -35,12 +37,13 @@ in
   home-manager = {
     # leaving out for now so that i'm warned on collisions
     # backupFileExtension = "hm-bak";
-    extraSpecialArgs = { inherit inputs user; };
+    extraSpecialArgs = { inherit inputs luvvlyLib user; };
     useGlobalPkgs = true;
     useUserPackages = true;
 
     sharedModules = [
-      inputs.self.homeManagerModules.default
+      inputs.self.homeModules.default
+
       inputs.jay.homeManagerModules.default
     ];
   };

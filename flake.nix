@@ -7,41 +7,26 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/x86_64-linux";
 
+    crane.url = "github:ipetkov/crane";
+
     # source only, for pkgs/ninjabrain-box (see ./overlays)
     ktrompfl = {
       url = "github:Ktrompfl/nix-config";
       flake = false;
     };
 
-    # used right now
     # used for quickly getting new features after a release before it hits nixpkgs
     bcachefs-tools = {
       url = "github:koverstreet/bcachefs-tools/v1.39.6";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
-        flake-compat.follows = "flake-compat";
-        flake-parts.follows = "flake-parts";
         rust-overlay.follows = "rust-overlay";
         treefmt-nix.follows = "treefmt-nix";
       };
     };
 
-    crane = {
-      url = "github:ipetkov/crane";
-    };
-
-    flake-compat = {
-      url = "github:NixOS/flake-compat";
-    };
-
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
-
     home-manager = {
-      # home-manager/master for unstable | home-manager/nixos-##.## for stable
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -92,104 +77,66 @@
   };
 
   outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      systems,
-      treefmt-nix,
-      ...
-    }:
+    inputs:
     let
-      inherit (nixpkgs) lib;
-      eachSystem = lib.genAttrs (import systems);
+      baseArgs = {
+        inherit inputs;
+        inherit (inputs) self;
+        inherit (inputs.nixpkgs) lib;
+      };
 
-      user = "jude";
-      mapNixosSystems =
-        nixosSystems:
-        lib.mapAttrs (
-          name:
-          { extraModules }:
-          lib.nixosSystem {
-            specialArgs = { inherit inputs user; };
+      # built before others so they can comsum it :3
+      luvvlyLib = import ./lib baseArgs;
 
-            modules = [
-              { networking.hostName = name; }
-              ./config/core
-              ./systems/${name}
-            ]
-            ++ extraModules;
-          }
-        ) nixosSystems;
+      commonArgs = baseArgs // {
+        inherit luvvlyLib;
+      };
 
-      # nixpkgs with this flake's overlays applied. The `packages` output goes
-      # through it so that `nix build .#foo` and the hosts, which apply the
-      # same overlay in ./system, cannot disagree about what `foo` is.
-      pkgsFor =
+      # attr set here saves reevaluating in each use of perSystem if it had been a function
+      # applies flake's overlays and some config so that everything agrees on what pkgs is
+      systemsPkgsMap = inputs.nixpkgs.lib.genAttrs (import inputs.systems) (
         system:
-        import nixpkgs {
+        import inputs.nixpkgs {
           inherit system;
           config.allowUnfree = true;
-          overlays = [ self.overlays.default ];
-        };
-
-      treefmtFor = eachSystem (
-        system:
-        treefmt-nix.lib.evalModule (pkgsFor system) {
-          projectRootFile = "flake.nix";
-          programs.nixfmt.enable = true;
-          programs.stylua.enable = true;
-
-          # external submodule
-          settings.global.excludes = [
-            "config/gaming/minecraft/waywall/waywall-config/ww_temporary_ninbot/**"
-          ];
+          overlays = [ inputs.self.overlays.default ];
         }
       );
+
+      importOutput = luvvlyLib.importWith commonArgs;
+
+      importPerSystemOutput =
+        file:
+        inputs.nixpkgs.lib.mapAttrs (
+          system: pkgs: luvvlyLib.importWith (commonArgs // { inherit pkgs system; }) file
+        ) systemsPkgsMap;
     in
     {
-      checks = eachSystem (
-        system:
-        let
-          pkgs = pkgsFor system;
-        in
-        {
-          formatting = treefmtFor.${system}.config.build.check self;
+      # custom lib functions
+      # imported/passed basically everywhere through args or specialArgs or callPackage
+      lib = luvvlyLib;
 
-          statix = pkgs.runCommandLocal "check-statix" { } ''
-            ${lib.getExe pkgs.statix} check ${self}
-            touch $out
-          '';
+      checks = importPerSystemOutput ./checks;
+      formatter = importPerSystemOutput ./formatter;
 
-          deadnix = pkgs.runCommandLocal "check-deadnix" { } ''
-            ${lib.getExe pkgs.deadnix} --fail ${self}
-            touch $out
-          '';
-        }
-      );
+      # custom packages
+      # auto discovered from ./packages
+      # accessible through 'nix build', 'nix shell', etc
+      # packages r sourced from this flake's overlays output so all overlays apply
+      packages = importPerSystemOutput ./packages;
 
-      formatter = eachSystem (system: treefmtFor.${system}.config.build.wrapper);
+      # custom packages, package additions, and modifications exported as overlays
+      # 'default' combines all overlays, 'additions' and 'modifications' r separated
+      overlays = importOutput ./overlays;
 
-      # Custom modules
-      nixosModules.default = import ./modules/nixos;
-      homeManagerModules.default = import ./modules/home-manager;
+      # all nixos configurations
+      # auto discovered from ./configs/nixos/systems
+      nixosConfigurations = importOutput ./configs/nixos;
 
-      # Your custom packages and modifications, exported as overlays
-      overlays.default = import ./overlays { inherit inputs; };
-
-      # Your custom packages
-      # Accessible through 'nix build', 'nix shell', etc
-      packages = eachSystem (
-        system:
-        import ./pkgs {
-          inherit inputs;
-          pkgs = pkgsFor system;
-        }
-      );
-
-      nixosConfigurations = mapNixosSystems {
-        luvvly-pc = {
-          extraModules = [ ];
-        };
-      };
+      # custom modules
+      # auto discovered from ./modules/{nixos,home}
+      # '.default' combines all modules for each, all exposed separately as well
+      nixosModules = importOutput ./modules/nixos;
+      homeModules = importOutput ./modules/home;
     };
 }
