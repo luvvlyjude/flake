@@ -1,7 +1,7 @@
-{ jayLib, ... }:
+{ luvvlyLib, ... }:
 
 let
-  inherit (jayLib)
+  inherit (luvvlyLib.jay)
     createMark
     defineAction
     jumpToMark

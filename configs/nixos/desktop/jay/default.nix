@@ -24,11 +24,10 @@
   hm =
     hm:
     let
-      jayLib = import ./jayLib.nix;
       partArgs = {
         inherit
           hm
-          jayLib
+          luvvlyLib
           lib
           pkgs
           ;

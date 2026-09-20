@@ -1,7 +1,7 @@
-{ jayLib, ... }:
+{ luvvlyLib, ... }:
 
 let
-  inherit (jayLib) jumpToMark;
+  inherit (luvvlyLib.jay) jumpToMark;
 in
 {
   actions = {

@@ -1,12 +1,12 @@
 {
-  jayLib,
   lib,
+  luvvlyLib,
   pkgs,
   ...
 }:
 
 let
-  inherit (jayLib)
+  inherit (luvvlyLib.jay)
     createMark
     exec
     moveToOutput

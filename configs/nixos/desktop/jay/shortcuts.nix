@@ -1,12 +1,12 @@
 {
-  jayLib,
   lib,
+  luvvlyLib,
   pkgs,
   ...
 }:
 
 let
-  inherit (jayLib)
+  inherit (luvvlyLib.jay)
     exec
     moveToOutput
     moveToWorkspace

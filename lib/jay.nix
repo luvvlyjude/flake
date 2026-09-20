@@ -1,4 +1,10 @@
 # yoinked this idea straight from ktrompfl B)
+
+# The vocabulary the jay configuration is written in: constructors for the
+# actions its toml spec spells as `{ type = ...; }` tables, the two bar
+# segments that have to be pushed rather than polled, and the idle timeout
+# that more than one part refers to.
+
 rec {
   # --- action constructors ---
   #
@@ -91,44 +97,4 @@ rec {
 
   # `delta` moves one or more window edges, e.g. `{ dx1 = -10; }`.
   resize = delta: { type = "resize"; } // delta;
-
-  # # --- bar ---
-  # #
-  # # The two bar segments that reflect compositor state - the input mode and
-  # # the idle inhibitor - cannot be observed from the outside, so whatever
-  # # changes either of them pushes the new value into the bar itself.
-  # bar =
-  #   let
-  #     jay-bar = lib.getExe pkgs.jay-bar;
-  #   in
-  #   {
-  #     mode =
-  #       name:
-  #       exec [
-  #         jay-bar
-  #         "mode"
-  #         name
-  #       ];
-  #     idleInhibitor =
-  #       state:
-  #       exec [
-  #         jay-bar
-  #         "idle-inhibitor"
-  #         state
-  #       ];
-  #     init = exec [
-  #       jay-bar
-  #       "init"
-  #     ];
-  #   };
-
-  # --- constants ---
-
-  # Shared by behavior.nix, which arms the timeout, and actions.nix, which
-  # restores it when the idle inhibitor is switched off again.
-  idle = {
-    minutes = 10;
-    # screen goes black during grace period before idle action and output disable
-    grace-period.seconds = 15;
-  };
 }

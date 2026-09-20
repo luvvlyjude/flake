@@ -34,8 +34,9 @@ let
     unique
     ;
 in
-
 rec {
+  jay = importWith { inherit lib; } ./jay.nix;
+
   /**
     Import a file, applying `args` to it only if it turns out to be a function.
 
