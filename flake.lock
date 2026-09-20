@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "ast-grep-agent-skill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1789268336,
+        "narHash": "sha256-dORqiMdFOUQVEF6wn1IZiTIcslzO+441A0GZP4KNcOQ=",
+        "owner": "ast-grep",
+        "repo": "agent-skill",
+        "rev": "f2175aff21f20cfb8e2db30c28febeb3a2d42b61",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ast-grep",
+        "repo": "agent-skill",
+        "type": "github"
+      }
+    },
     "bcachefs-tools": {
       "inputs": {
         "crane": [
@@ -371,6 +387,7 @@
     },
     "root": {
       "inputs": {
+        "ast-grep-agent-skill": "ast-grep-agent-skill",
         "bcachefs-tools": "bcachefs-tools",
         "crane": "crane",
         "home-manager": "home-manager",

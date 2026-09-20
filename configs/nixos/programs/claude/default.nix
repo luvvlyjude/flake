@@ -35,7 +35,7 @@
         enableMcpIntegration = true;
 
         skills = import ./skills.nix {
-          inherit lib pkgs;
+          inherit inputs lib pkgs;
         };
 
         lspServers = {

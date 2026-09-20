@@ -15,6 +15,12 @@
       flake = false;
     };
 
+    # source only, for claude skills (see ./configs/nixos/programs/claude/skills.nix)
+    ast-grep-agent-skill = {
+      url = "github:ast-grep/agent-skill";
+      flake = false;
+    };
+
     # used for quickly getting new features after a release before it hits nixpkgs
     bcachefs-tools = {
       url = "github:koverstreet/bcachefs-tools/v1.39.6";
