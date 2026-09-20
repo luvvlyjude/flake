@@ -48,6 +48,8 @@ in
       # pkgs built in flake.nix with all overlays and custom packages, keyed by host.system
       nixpkgs.pkgs = systemsPkgsMap.${host.system};
 
+      hardware.enableAllFirmware = true;
+
       networking = { inherit hostName; };
       system = { inherit stateVersion; };
 
