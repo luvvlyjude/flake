@@ -13,6 +13,7 @@ workspace: {
     "WebFetch(domain:devenv.sh)"
     "WebFetch(domain:classifier.dev)"
 
+    "mcp__ast-grep__*"
     "mcp__classifier__*"
     "mcp__nixos__*"
   ];
