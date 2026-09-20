@@ -1,4 +1,4 @@
-{ user, ... }:
+{ username, ... }:
 
 let
   mapWorlds = worlds: map (world: "mcsr/worlds/maps/${world}") worlds;
@@ -11,7 +11,8 @@ in
 
     instances = [
       {
-        inherit size user;
+        inherit size;
+        user = username;
         saves = mkSaves "seedqueue";
         tmpfs = true;
         worlds = mapWorlds [

@@ -1,27 +1,22 @@
 {
   inputs,
-  lib,
-  luvvlyLib,
   ...
 }:
 
-let
-  mkHost =
-    name: path:
-    let
-      host = import path;
-    in
-    lib.nixosSystem {
-      specialArgs = {
-        inherit inputs luvvlyLib;
-        user = host.user or "jude";
-      };
+{
+  imports = [
+    # all consumed nixosModules should go here
+    inputs.bcachefs-tools.nixosModules.default
+    inputs.home-manager.nixosModules.home-manager
+    inputs.jay.nixosModules.default
+    inputs.mcsr-nixos.nixosModules.tmpfs-symlink
 
-      modules = [
-        ./core
-        { networking.hostName = name; }
-      ]
-      ++ host.modules;
-    };
-in
-lib.mapAttrs mkHost (luvvlyLib.collectNixFiles { directory = ./systems; })
+    ./users.nix
+  ];
+
+  documentation = {
+    doc.enable = false;
+    info.enable = false;
+    nixos.enable = false;
+  };
+}

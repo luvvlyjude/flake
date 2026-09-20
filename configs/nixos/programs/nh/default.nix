@@ -1,9 +1,9 @@
-{ config, user, ... }:
+{ config, username, ... }:
 
 {
   programs.nh = {
     enable = true;
 
-    flake = "${config.users.users.${user}.home}/Projects/flake";
+    flake = "${config.users.users.${username}.home}/Projects/flake";
   };
 }

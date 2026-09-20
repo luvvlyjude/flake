@@ -94,10 +94,6 @@
       # built before others so they can comsum it :3
       luvvlyLib = import ./lib baseArgs;
 
-      commonArgs = baseArgs // {
-        inherit luvvlyLib;
-      };
-
       # attr set here saves reevaluating in each use of perSystem if it had been a function
       # applies flake's overlays and some config so that everything agrees on what pkgs is
       systemsPkgsMap = inputs.nixpkgs.lib.genAttrs (import inputs.systems) (
@@ -108,6 +104,10 @@
           overlays = [ inputs.self.overlays.default ];
         }
       );
+
+      commonArgs = baseArgs // {
+        inherit luvvlyLib systemsPkgsMap;
+      };
 
       importOutput = luvvlyLib.importWith commonArgs;
 
@@ -136,8 +136,8 @@
       overlays = importOutput ./overlays;
 
       # all nixos configurations
-      # auto discovered from ./configs/nixos/systems
-      nixosConfigurations = importOutput ./configs/nixos;
+      # auto discovered from ./systems
+      nixosConfigurations = importOutput ./systems;
 
       # custom modules
       # auto discovered from ./modules/{nixos,home}

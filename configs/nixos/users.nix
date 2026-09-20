@@ -1,4 +1,4 @@
-{ user, ... }:
+{ username, ... }:
 
 {
   users = {
@@ -6,7 +6,7 @@
     # mutableUsers = false;
 
     users = {
-      "${user}" = {
+      "${username}" = {
         isNormalUser = true;
         uid = 1000;
         extraGroups = [
@@ -28,18 +28,5 @@
       #   initialHashedPassword = "!";
       # };
     };
-  };
-
-  # alias for home-manager.users.${user}
-  # check ./default.nix
-  hm = {
-    home = {
-      username = user;
-      homeDirectory = "/home/${user}";
-    };
-
-    programs.home-manager.enable = true;
-
-    home.stateVersion = "26.05";
   };
 }

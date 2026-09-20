@@ -22,6 +22,4 @@
     };
     kernelPackages = pkgs.linuxPackages_latest;
   };
-
-  system.stateVersion = "26.05";
 }
