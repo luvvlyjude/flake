@@ -45,13 +45,6 @@
           };
         };
 
-        mcpServers = {
-          nixos = {
-            command = getExe pkgs.mcp-nixos;
-            args = [ ];
-          };
-        };
-
         context = ''
           # Scratch files
 

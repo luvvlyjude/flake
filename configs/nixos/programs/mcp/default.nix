@@ -1,14 +1,20 @@
 {
-  hm = {
-    # Client-agnostic MCP servers. Each client opts in with its own
-    # `enableMcpIntegration`; servers that only make sense for one client stay
-    # in that client's own config instead.
-    programs.mcp = {
-      enable = true;
+  hm =
+    { lib, pkgs, ... }:
 
-      # Hosted, keyless, rate limited per IP. Every classification leaves the
-      # machine, so nothing private goes through it.
-      servers.classifier.url = "https://classifier.dev/mcp";
+    let
+      inherit (lib) getExe;
+    in
+    {
+      # enabled in claude and zed with `enableMcpIntegration`.
+      programs.mcp = {
+        enable = true;
+
+        servers = {
+          classifier.url = "https://classifier.dev/mcp";
+
+          nixos.command = getExe pkgs.mcp-nixos;
+        };
+      };
     };
-  };
 }
