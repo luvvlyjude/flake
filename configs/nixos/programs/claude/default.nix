@@ -42,8 +42,6 @@
           inherit inputs lib pkgs;
         };
 
-        plugins.ponytail = "${inputs.ponytail}";
-
         lspServers = {
           nixd = {
             command = getExe pkgs.nixd;
@@ -53,6 +51,9 @@
 
         rules = import ./rules.nix;
       };
+
+      # hooks end up outside plugin dir so just link full folder
+      home.file.".claude/skills/ponytail".source = inputs.ponytail;
 
       home.packages = [
         llm-packages.ccusage
