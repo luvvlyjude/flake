@@ -50,6 +50,19 @@
           middle_click_paste = false;
 
           theme = "Dark OLED";
+          theme_overrides."Dark OLED" = {
+            "border" = "#350030";
+            "border.focused" = "#350030";
+            "border.selected" = "#350030";
+            "border.variant" = "#350030";
+            "elevated_surface.background" = "#000000";
+            "ghost_element.selected" = "#350030";
+            "pane.focused_border" = "#350030";
+            "pane_group.border" = "#350030";
+            "panel.focused_border" = "#350030";
+            "tab.active_background" = "#350030";
+            "terminal.background" = "#000000";
+          };
           colorize_brackets = true;
 
           relative_line_numbers = "enabled";
