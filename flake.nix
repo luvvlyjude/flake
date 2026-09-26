@@ -21,6 +21,12 @@
       flake = false;
     };
 
+    # source only, for the claude plugin (see ./configs/nixos/programs/claude)
+    ponytail = {
+      url = "github:DietrichGebert/ponytail";
+      flake = false;
+    };
+
     # used for quickly getting new features after a release before it hits nixpkgs
     bcachefs-tools = {
       url = "github:koverstreet/bcachefs-tools/v1.39.6";

@@ -41,6 +41,8 @@
           inherit inputs lib pkgs;
         };
 
+        plugins.ponytail = "${inputs.ponytail}";
+
         lspServers = {
           nixd = {
             command = getExe pkgs.nixd;
@@ -65,6 +67,7 @@
         # extra utilities
         pkgs.ast-grep
         pkgs.classifier-dev
+        pkgs.nodejs
         pkgs.ripgrep
         pkgs.bubblewrap
         pkgs.socat

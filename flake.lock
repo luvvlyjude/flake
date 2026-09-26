@@ -385,6 +385,22 @@
         "type": "github"
       }
     },
+    "ponytail": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1789396482,
+        "narHash": "sha256-PES5XrSYx0VBXWVHEDRykGy0SAmJfV/luzy8Gfg0aAQ=",
+        "owner": "DietrichGebert",
+        "repo": "ponytail",
+        "rev": "e3ba2aa6f1e6f0bc4d69eb09c9f0d0a93af56156",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DietrichGebert",
+        "repo": "ponytail",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "ast-grep-agent-skill": "ast-grep-agent-skill",
@@ -398,6 +414,7 @@
         "llm-agents": "llm-agents",
         "mcsr-nixos": "mcsr-nixos",
         "nixpkgs": "nixpkgs_2",
+        "ponytail": "ponytail",
         "rust-overlay": "rust-overlay",
         "systems": "systems_3",
         "treefmt-nix": "treefmt-nix_2",
