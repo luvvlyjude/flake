@@ -24,6 +24,9 @@
         package = llm-packages.claude-code;
 
         settings = {
+          awaySummaryEnabled = false;
+          spinnerTipsEnabled = false;
+
           env.TMPDIR = workspace;
 
           sandbox = import ./sandbox.nix workspace;
