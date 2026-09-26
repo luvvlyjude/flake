@@ -23,9 +23,9 @@ let
   # in which direction that edge grows, see the resize mode below.
   dirs = [
     (mkDir "left" [ "h" "Left" ] "dx1" (-1))
-    (mkDir "down" [ "j" "Down" ] "dy2" (1))
+    (mkDir "down" [ "j" "Down" ] "dy2" 1)
     (mkDir "up" [ "k" "Up" ] "dy1" (-1))
-    (mkDir "right" [ "l" "Right" ] "dx2" (1))
+    (mkDir "right" [ "l" "Right" ] "dx2" 1)
   ];
 
   dirActions = [

@@ -13,8 +13,7 @@
 }:
 
 let
-  inherit (lib) concatMapStringsSep toLower;
-  inherit (luvvlyLib) mkShellArgs;
+  inherit (lib) concatMapStringsSep escapeShellArgs toLower;
 
   getIcon = luvvlyLib.iconPath luvvly-assets;
   getEscapedIcon = luvvlyLib.escapedIconPath luvvly-assets;
@@ -35,7 +34,7 @@ writeShellApplication {
         "Reboot"
         "Hibernate"
       ];
-      fuzzelArgs = mkShellArgs [
+      fuzzelArgs = escapeShellArgs [
         "--dmenu"
         "--width=14"
         "--anchor=top-right"

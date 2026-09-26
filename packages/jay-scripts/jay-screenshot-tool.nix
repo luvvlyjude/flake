@@ -1,6 +1,7 @@
 {
   coreutils,
   jay-screenshot,
+  lib,
   libnotify,
   luvvly-assets,
   luvvlyLib,
@@ -10,7 +11,7 @@
 }:
 
 let
-  inherit (luvvlyLib) mkShellArgs;
+  inherit (lib) escapeShellArgs;
 
   getIcon = luvvlyLib.iconPath luvvly-assets;
 in
@@ -25,18 +26,18 @@ writeShellApplication {
   ];
   text =
     let
-      notifArgs = mkShellArgs [
+      notifArgs = escapeShellArgs [
         "--app-name=jay-screenshot-tool"
         "--app-icon=${getIcon "jay-logo"}"
       ];
-      captureNotifArgs = mkShellArgs [
+      captureNotifArgs = escapeShellArgs [
         "--action=edit=Edit"
         "--action=save=Save"
         "--expire-time=5000"
         "Screenshot"
         "copied to clipboard"
       ];
-      saveNotifArgs = mkShellArgs [
+      saveNotifArgs = escapeShellArgs [
         "--expire-time=2000"
         "Screenshot"
         "saved to screenshots folder"

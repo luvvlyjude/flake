@@ -10,11 +10,6 @@
   libxkbcommon,
   libGL,
   vulkan-loader,
-  libdecor,
-  # libdecor is only dlopen'd to draw client-side decorations. Under waywall (and
-  # under Jay generally) nothing ever sees them, and GLFW falls back to plain
-  # xdg-shell when the module is missing. Off = one less runtime closure entry.
-  withLibdecor ? false,
 }:
 
 stdenv.mkDerivation (_finalAttrs: {
@@ -43,10 +38,6 @@ stdenv.mkDerivation (_finalAttrs: {
       --replace-fail '"libwayland-cursor.so.0"' '"${lib.getLib wayland}/lib/libwayland-cursor.so.0"' \
       --replace-fail '"libwayland-egl.so.1"' '"${lib.getLib wayland}/lib/libwayland-egl.so.1"' \
       --replace-fail '"libxkbcommon.so.0"' '"${lib.getLib libxkbcommon}/lib/libxkbcommon.so.0"'
-  ''
-  + lib.optionalString withLibdecor ''
-    substituteInPlace src/wl_init.c \
-      --replace-fail '"libdecor-0.so.0"' '"${lib.getLib libdecor}/lib/libdecor-0.so.0"'
   '';
 
   strictDeps = true;

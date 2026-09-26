@@ -5,7 +5,7 @@
 # segments that have to be pushed rather than polled, and the idle timeout
 # that more than one part refers to.
 
-rec {
+{
   # --- action constructors ---
   #
   # One per action type the configuration uses; see the `Action` section of
@@ -19,25 +19,6 @@ rec {
     exec = command;
   };
 
-  # `connector` is a connector configuration, i.e. a `match` plus whatever
-  # it changes about every output that matches it.
-  configureConnector = connector: {
-    type = "configure-connector";
-    inherit connector;
-  };
-  enableConnector =
-    match:
-    configureConnector {
-      inherit match;
-      enabled = true;
-    };
-  disableConnector =
-    match:
-    configureConnector {
-      inherit match;
-      enabled = false;
-    };
-
   createMark = name: {
     type = "create-mark";
     id = {
@@ -49,11 +30,6 @@ rec {
     id = {
       inherit name;
     };
-  };
-
-  configureIdle = idle: {
-    type = "configure-idle";
-    inherit idle;
   };
 
   defineAction = name: action: {

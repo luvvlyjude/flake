@@ -1,5 +1,3 @@
-# { pkgs, ... }:
-
 {
   # for discord tts i guess
   # services.speechd.enable = true;

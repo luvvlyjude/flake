@@ -1,8 +1,9 @@
 {
   # config/core/pam-limits module allows waywall to request priority scheduling
 
-  hm.imports = [
-    ({ inputs, ... }: {
+  hm =
+    { inputs, ... }:
+    {
       imports = [ inputs.mcsr-nixos.homeManagerModules.waywall ];
 
       programs.waywall = {
@@ -24,6 +25,5 @@
           source = ./waywall-config;
         };
       };
-    })
-  ];
+    };
 }
