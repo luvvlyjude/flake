@@ -53,8 +53,7 @@ workspace: {
       "/usr"
       workspace
 
-      "~/.config/git"
-      "~/.config/direnv"
+      "~/.config"
       "~/.cargo"
     ];
 

@@ -7,7 +7,11 @@ let
   ];
 in
 {
-  additionalDirectories = [ workspace ];
+  additionalDirectories = [
+    workspace
+    "/nix/store"
+    "~/.config"
+  ];
 
   blockReadsOutsideWorkingDirectories = true;
 
