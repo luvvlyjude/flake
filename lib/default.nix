@@ -16,6 +16,7 @@ let
     concatStringsSep
     count
     filter
+    getName
     hasSuffix
     isFunction
     mapAttrsToList
@@ -25,6 +26,8 @@ let
     removeSuffix
     toLower
     unique
+    versionAtLeast
+    warnIf
     ;
 in
 rec {
@@ -115,6 +118,15 @@ rec {
     // {
       default.imports = attrValues modules;
     };
+
+  # `package.overrideAttrs attrs`, warning once nixpkgs reaches `version`
+  # so the override gets dropped instead of silently pinning an older build
+  # https://jezenthomas.com/2026/07/nix-overrides-that-expire-themselves
+  overrideAttrsUntil =
+    version: package: attrs:
+    warnIf (versionAtLeast package.version version)
+      "${getName package}: nixpkgs has ${package.version} (>= ${version}), drop the override"
+      (package.overrideAttrs attrs);
 
   # `$out/icons/<name>.png` inside `package`
   iconPath = package: name: "${package}/icons/${toLower name}.png";

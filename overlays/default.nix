@@ -55,6 +55,42 @@ rec {
     # ...
     # });
 
+    # version bumps and upstream-fix pins go through luvvlyLib.overrideAttrsUntil,
+    # so eval warns once nixpkgs catches up and the override can go
+
+    # https://github.com/NixOS/nixpkgs/pull/560875
+    fuzzel = luvvlyLib.overrideAttrsUntil "1.15.0" prev.fuzzel {
+      version = "1.15.0";
+      src = final.fetchFromCodeberg {
+        owner = "dnkl";
+        repo = "fuzzel";
+        rev = "1.15.0";
+        hash = "sha256-krlBdIu/WhIep5YyhkGiq0csb/Z2bf6sQWTxqOP1j14=";
+      };
+    };
+
+    # without it the nvenc probe can't find the driver and obs hides nvenc;
+    # overlaid so the plugins link against this obs instead of a second one
+    obs-studio = prev.obs-studio.override { cudaSupport = true; };
+
+    # 2.6.0 fails against obs 32.2, fixed upstream but unreleased
+    # https://github.com/NixOS/nixpkgs/issues/556310
+    obs-studio-plugins = prev.obs-studio-plugins // {
+      obs-shaderfilter = luvvlyLib.overrideAttrsUntil "2.6.1" prev.obs-studio-plugins.obs-shaderfilter {
+        version = "2.6.0-unstable-2026-09-22";
+        src = final.fetchFromGitHub {
+          owner = "exeldro";
+          repo = "obs-shaderfilter";
+          rev = "af9ae58f2aba19653e3635de129e7a62e466459d";
+          hash = "sha256-03j+g98krr1uTrhXzD96CuvNBvHd/cg/CdpioS3MygE=";
+        };
+        # master already installs to share/obs, the leftovers are duplicates
+        postInstall = ''
+          rm -rf $out/obs-plugins $out/data
+        '';
+      };
+    };
+
     # spotify with autoscrolling and wayland forced
     spotify = prev.spotify.overrideAttrs (oldAttrs: {
       preFixup = (oldAttrs.preFixup or "") + ''
