@@ -67,5 +67,7 @@
   ];
 
   # resolved from ../../configs/home/
-  homeModules = [ ];
+  homeModules = [
+    "programs/obs"
+  ];
 }
