@@ -1,11 +1,4 @@
 workspace:
-let
-  mcpTools = [
-    "ast-grep__*"
-    "classifier__*"
-    "nixos__*"
-  ];
-in
 {
   additionalDirectories = [
     workspace
@@ -24,12 +17,10 @@ in
     "WebFetch(domain:docs.rs)"
     "WebFetch(domain:devenv.sh)"
     "WebFetch(domain:classifier.dev)"
-  ]
-  # cli/zed name them differently
-  ++ builtins.concatMap (tool: [
-    "mcp__${tool}"
-    "mcp__plugin_hm_${tool}"
-  ]) mcpTools;
+    "mcp__plugin_hm_ast-grep__*"
+    "mcp__plugin_hm_classifier__*"
+    "mcp__plugin_hm_nixos__*"
+  ];
 
   deny = [
     "Read(~/.ssh/**)"

@@ -1,8 +1,6 @@
 {
   hm =
     {
-      config,
-      inputs,
       lib,
       osConfig,
       pkgs,
@@ -10,8 +8,6 @@
     }:
     let
       inherit (lib) getExe;
-
-      llm-packages = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
 
       # nixd option completion for NixOS and home-manager options
       flakeOptions = "(builtins.getFlake \"${osConfig.programs.nh.flake}\").nixosConfigurations.${osConfig.networking.hostName}.options";
@@ -22,7 +18,7 @@
 
         installRemoteServer = true;
 
-        enableMcpIntegration = true;
+        mutableUserSettings = false;
 
         extensions = [
           "dark-oled"
@@ -82,18 +78,6 @@
           };
           git_panel = {
             dock = "right";
-          };
-
-          agent_servers = {
-            claude-acp = {
-              type = "custom";
-              command = getExe llm-packages.claude-agent-acp;
-              env = {
-                # use wrapped claude code package to make configured plugins (e.g. language servers) available
-                CLAUDE_CODE_EXECUTABLE = getExe llm-packages.claude-code;
-                TMPDIR = config.programs.claude-code.settings.env.TMPDIR;
-              };
-            };
           };
 
           languages = {

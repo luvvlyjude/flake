@@ -6,7 +6,7 @@
       inherit (lib) getExe;
     in
     {
-      # enabled in claude and zed with `enableMcpIntegration`.
+      # enabled in claude with `enableMcpIntegration`.
       programs.mcp = {
         enable = true;
 
