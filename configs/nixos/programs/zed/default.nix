@@ -1,6 +1,7 @@
 {
   hm =
     {
+      config,
       lib,
       osConfig,
       pkgs,
@@ -66,6 +67,7 @@
 
           agent = {
             dock = "right";
+            terminal_init_command = getExe config.programs.claude-code.finalPackage;
           };
           project_panel = {
             dock = "right";
