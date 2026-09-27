@@ -58,17 +58,6 @@ rec {
     # version bumps and upstream-fix pins go through luvvlyLib.overrideAttrsUntil,
     # so eval warns once nixpkgs catches up and the override can go
 
-    # https://github.com/NixOS/nixpkgs/pull/560875
-    fuzzel = luvvlyLib.overrideAttrsUntil "1.15.0" prev.fuzzel {
-      version = "1.15.0";
-      src = final.fetchFromCodeberg {
-        owner = "dnkl";
-        repo = "fuzzel";
-        rev = "1.15.0";
-        hash = "sha256-krlBdIu/WhIep5YyhkGiq0csb/Z2bf6sQWTxqOP1j14=";
-      };
-    };
-
     # without it the nvenc probe can't find the driver and obs hides nvenc;
     # overlaid so the plugins link against this obs instead of a second one
     obs-studio = prev.obs-studio.override { cudaSupport = true; };
