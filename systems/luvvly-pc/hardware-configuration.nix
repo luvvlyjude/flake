@@ -34,10 +34,15 @@
   };
 
   fileSystems = {
-    "/" = {
-      device = "UUID=70fdf5d5-4f7c-4def-b8eb-6df5f6da441d";
-      fsType = "bcachefs";
-    };
+    "/" =
+      let
+        uuid = "70fdf5d5-4f7c-4def-b8eb-6df5f6da441d";
+      in
+      {
+        device = "UUID=${uuid}";
+        fsType = "bcachefs";
+        options = [ "x-systemd.wants=bcachefs-wait-devices@${uuid}.service" ];
+      };
 
     "/boot" = {
       device = "/dev/disk/by-uuid/1926-4056";
