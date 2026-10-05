@@ -13,8 +13,8 @@
       substituters = [
         # prebuilt cudaSupport packages, cache.nixos.org skips them
         "https://cache.nixos-cuda.org"
-        # llm-agents
-        "https://cache.numtide.com"
+        # llm-agents; its own priority is 30, which would beat cache.nixos.org (40)
+        "https://cache.numtide.com?priority=45"
       ];
       trusted-public-keys = [
         "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
