@@ -64,6 +64,7 @@
 
           relative_line_numbers = "enabled";
           vertical_scroll_margin = 10;
+          wrap_guides = [ 100 ];
 
           agent = {
             dock = "right";
@@ -94,6 +95,7 @@
                 "..."
               ];
               tab_size = 2;
+              wrap_guides = [ 100 ];
             };
           };
 
