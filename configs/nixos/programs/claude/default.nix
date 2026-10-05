@@ -9,7 +9,7 @@
     }:
 
     let
-      inherit (lib) genAttrs getExe;
+      inherit (lib) genAttrs getExe getExe';
       llm-packages = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
 
       workspace = "${config.xdg.stateHome}/claude/workspace";
@@ -70,6 +70,16 @@
         };
 
         lspServers = {
+          clangd = {
+            command = getExe' pkgs.clang-tools "clangd";
+            extensionToLanguage = toLang "cpp" [
+              ".cc"
+              ".cpp"
+              ".h"
+              ".hpp"
+            ];
+          };
+
           nixd = {
             command = getExe pkgs.nixd;
             extensionToLanguage = toLang "nix" [ ".nix" ];

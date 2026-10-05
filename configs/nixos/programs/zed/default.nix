@@ -8,7 +8,7 @@
       ...
     }:
     let
-      inherit (lib) getExe;
+      inherit (lib) getExe getExe';
 
       # nixd option completion for NixOS and home-manager options
       flakeOptions = "(builtins.getFlake \"${osConfig.programs.nh.flake}\").nixosConfigurations.${osConfig.networking.hostName}.options";
@@ -84,6 +84,12 @@
           };
 
           languages = {
+            "C++" = {
+              format_on_save = "on";
+              tab_size = 2;
+              wrap_guides = [ 80 ];
+            };
+
             Nix = {
               formatter.external = {
                 command = getExe pkgs.nixfmt;
@@ -100,6 +106,8 @@
           };
 
           lsp = {
+            clangd.binary.path = getExe' pkgs.clang-tools "clangd";
+
             nixd = {
               binary.path = getExe pkgs.nixd;
               settings = {
