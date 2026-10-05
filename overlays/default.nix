@@ -73,6 +73,8 @@ rec {
           rev = "af9ae58f2aba19653e3635de129e7a62e466459d";
           hash = "sha256-03j+g98krr1uTrhXzD96CuvNBvHd/cg/CdpioS3MygE=";
         };
+        # C23 strrchr returns const for a const arg, master still assigns it to char *
+        env.NIX_CFLAGS_COMPILE = "-Wno-error=discarded-qualifiers";
         # master already installs to share/obs, the leftovers are duplicates
         postInstall = ''
           rm -rf $out/obs-plugins $out/data
