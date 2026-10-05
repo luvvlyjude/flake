@@ -35,17 +35,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1789154473,
-        "narHash": "sha256-cBYn/g6eLT5rTumo4Y24rWSHS2Sc7gFthPuCg1AQ22k=",
+        "lastModified": 1791145399,
+        "narHash": "sha256-4yYiXFq90h093xtltaded9NjQK0JYGFs1iJ2A+5RC1I=",
         "owner": "koverstreet",
         "repo": "bcachefs-tools",
-        "rev": "66d3b1b36ea11a33644f6ee7abb1f5ae1d679e18",
+        "rev": "e632f69539c7fabf07fdfe051a1f8483427eb2b4",
         "type": "github"
       },
       "original": {
         "owner": "koverstreet",
-        "ref": "v1.39.6",
         "repo": "bcachefs-tools",
+        "rev": "e632f69539c7fabf07fdfe051a1f8483427eb2b4",
         "type": "github"
       }
     },
