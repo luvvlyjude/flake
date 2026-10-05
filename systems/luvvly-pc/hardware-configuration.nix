@@ -47,10 +47,7 @@
     "/boot" = {
       device = "/dev/disk/by-uuid/1926-4056";
       fsType = "vfat";
-      options = [
-        "fmask=0077"
-        "dmask=0077"
-      ];
+      options = [ "umask=0077" ];
     };
 
     "/mnt/readyshare" = {
