@@ -6,8 +6,6 @@
 
     nvidia = {
       branch = "latest";
-      modesetting.enable = true;
-      nvidiaSettings = true;
       open = true;
       powerManagement.enable = true;
     };

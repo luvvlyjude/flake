@@ -21,8 +21,5 @@
       # accel-speed = 0.0;
       accel-speed = -0.5;
     }
-    {
-      match.is-keyboard = true;
-    }
   ];
 }

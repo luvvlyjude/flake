@@ -8,13 +8,13 @@
 
 let
   inherit (lib) mapAttrs nixosSystem;
-  inherit (luvvlyLib) collectNixFiles importWith;
+  inherit (luvvlyLib) collectNixFiles;
 in
 mapAttrs
   (
     hostName: path:
     nixosSystem (
-      importWith {
+      import ./nixosSystem.nix {
         inherit
           inputs
           lib
@@ -23,7 +23,7 @@ mapAttrs
           systemsPkgsMap
           ;
         host = import path;
-      } ./nixosSystem.nix
+      }
     )
   )
   # collect all files or folders with default.nix to use as systems
