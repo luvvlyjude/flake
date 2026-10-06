@@ -29,7 +29,7 @@
 
     # used for quickly getting new features after a release before it hits nixpkgs
     bcachefs-tools = {
-      url = "github:koverstreet/bcachefs-tools/e632f69539c7fabf07fdfe051a1f8483427eb2b4";
+      url = "github:koverstreet/bcachefs-tools";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
