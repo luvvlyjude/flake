@@ -16,20 +16,14 @@
 
       toLang = lang: exts: genAttrs exts (_: lang);
 
-      # personal plugins don't get their hooks registered, so wire ponytail's by hand
-      ponytailHook = event: script: {
-        ${event} = [
-          {
-            hooks = [
-              {
-                type = "command";
-                command = "${getExe pkgs.nodejs} ${inputs.ponytail}/hooks/${script}.js";
-                timeout = 5;
-              }
-            ];
-          }
-        ];
-      };
+      # HM's wrapper breaks the hooks file path, so inline hooks into plugin.json
+      ponytail = pkgs.runCommand "ponytail" { } ''
+        cp -r ${inputs.ponytail} $out
+        chmod -R u+w $out
+        ${getExe pkgs.jq} --slurpfile h ${inputs.ponytail}/hooks/claude-codex-hooks.json \
+          '.hooks = ($h[0].hooks | walk(if type == "string" then sub("^node "; "${getExe pkgs.nodejs} ") else . end))' \
+          ${inputs.ponytail}/.claude-plugin/plugin.json > $out/.claude-plugin/plugin.json
+      '';
 
       # icons colored like the bash PS1 in ../bash, plus ponytail's mode badge
       statusline = pkgs.writeShellApplication {
@@ -70,11 +64,6 @@
           sandbox = import ./sandbox.nix workspace;
           permissions = import ./permissions.nix workspace;
 
-          hooks =
-            ponytailHook "SessionStart" "ponytail-activate"
-            // ponytailHook "UserPromptSubmit" "ponytail-mode-tracker"
-            // ponytailHook "SubagentStart" "ponytail-subagent";
-
           statusLine = {
             type = "command";
             command = getExe statusline;
@@ -89,7 +78,7 @@
           ast-grep = "${inputs.ast-grep-agent-skill}/ast-grep";
           classifier = "${inputs.classifier-dev}/plugins/classifier";
           humanizer = "${inputs.humanizer}";
-          ponytail = "${inputs.ponytail}";
+          inherit ponytail;
         };
 
         lspServers = {
