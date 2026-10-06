@@ -7,17 +7,6 @@
     `permissions.nix` next to it. Don't work around it.
   '';
 
-  scratch = ''
-    # Scratch files
-
-    Never write to `/tmp` or `/var/tmp`, and never pass either as an output
-    directory. Inside the sandbox `/tmp` is a RAM-backed tmpfs, so large files
-    there eat memory.
-
-    Use `$TMPDIR` instead, one subdirectory per task. It is on disk and cleaned
-    after 7 days.
-  '';
-
   style = ''
     # Replies
 

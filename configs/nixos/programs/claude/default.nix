@@ -119,7 +119,6 @@
 
         # extra utilities
         pkgs.ast-grep
-        pkgs.nodejs
         pkgs.ripgrep
         pkgs.bubblewrap
         pkgs.socat
