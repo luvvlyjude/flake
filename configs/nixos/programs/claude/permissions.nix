@@ -1,9 +1,7 @@
-workspace:
-{
+workspace: {
   additionalDirectories = [
     workspace
     "/nix/store"
-    "~/.config"
   ];
 
   blockReadsOutsideWorkingDirectories = true;
@@ -23,6 +21,7 @@ workspace:
   ];
 
   deny = [
+    "Read(~/.config/gh/**)"
     "Read(~/.ssh/**)"
     "Read(//run/secrets.d/**)"
     "Read(//persist/sops/**)"

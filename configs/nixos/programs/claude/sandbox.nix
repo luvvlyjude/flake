@@ -43,7 +43,11 @@ workspace: {
   };
 
   filesystem = {
-    denyRead = [ "/" ];
+    # /run/user holds the session bus, which reaches outside the sandbox
+    denyRead = [
+      "/"
+      "/run/user"
+    ];
 
     allowRead = [
       "/nix"
