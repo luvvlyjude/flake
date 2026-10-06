@@ -82,6 +82,22 @@
         "type": "github"
       }
     },
+    "classifier-dev": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791112991,
+        "narHash": "sha256-J183l5sCSr7kHMQSTEozdPDEz+uha6VY54Er9KDcRD8=",
+        "owner": "mrmps",
+        "repo": "classifier-dev",
+        "rev": "b9211dd39ccbfea839a066dab4823b7151a6ac2f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mrmps",
+        "repo": "classifier-dev",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1790899423,
@@ -187,6 +203,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "humanizer": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790574878,
+        "narHash": "sha256-n8cbTzhlGf8VnWpPukq7XD2mucIrqyE1XMpAAc5oA8A=",
+        "owner": "blader",
+        "repo": "humanizer",
+        "rev": "225a6f39ac85f76ee48dbad772ea4abe4ed6c9d8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "blader",
+        "repo": "humanizer",
         "type": "github"
       }
     },
@@ -404,8 +436,10 @@
       "inputs": {
         "ast-grep-agent-skill": "ast-grep-agent-skill",
         "bcachefs-tools": "bcachefs-tools",
+        "classifier-dev": "classifier-dev",
         "crane": "crane",
         "home-manager": "home-manager",
+        "humanizer": "humanizer",
         "jay": "jay",
         "jay-screenshot": "jay-screenshot",
         "jay-tray-item": "jay-tray-item",

@@ -15,13 +15,19 @@
       flake = false;
     };
 
-    # source only, for claude skills (see ./configs/nixos/programs/claude/skills.nix)
+    # source only, for claude plugins (see ./configs/nixos/programs/claude)
     ast-grep-agent-skill = {
       url = "github:ast-grep/agent-skill";
       flake = false;
     };
-
-    # source only, for the claude plugin (see ./configs/nixos/programs/claude)
+    classifier-dev = {
+      url = "github:mrmps/classifier-dev";
+      flake = false;
+    };
+    humanizer = {
+      url = "github:blader/humanizer";
+      flake = false;
+    };
     ponytail = {
       url = "github:DietrichGebert/ponytail";
       flake = false;

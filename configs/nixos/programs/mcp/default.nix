@@ -13,8 +13,6 @@
         servers = {
           ast-grep.command = getExe pkgs.ast-grep-mcp;
 
-          classifier.url = "https://classifier.dev/mcp";
-
           nixos.command = getExe pkgs.mcp-nixos;
         };
       };

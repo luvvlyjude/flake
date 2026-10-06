@@ -65,8 +65,11 @@
 
         enableMcpIntegration = true;
 
-        skills = import ./skills.nix {
-          inherit inputs lib pkgs;
+        plugins = {
+          ast-grep = "${inputs.ast-grep-agent-skill}/ast-grep";
+          classifier = "${inputs.classifier-dev}/plugins/classifier";
+          humanizer = "${inputs.humanizer}";
+          ponytail = "${inputs.ponytail}";
         };
 
         lspServers = {
@@ -89,15 +92,11 @@
         rules = import ./rules.nix;
       };
 
-      # hooks end up outside plugin dir so just link full folder
-      home.file.".claude/skills/ponytail".source = inputs.ponytail;
-
       home.packages = [
         llm-packages.ccusage
 
         # extra utilities
         pkgs.ast-grep
-        pkgs.classifier-dev
         pkgs.nodejs
         pkgs.ripgrep
         pkgs.bubblewrap

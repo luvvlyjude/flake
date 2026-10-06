@@ -15,8 +15,9 @@ workspace: {
     "WebFetch(domain:docs.rs)"
     "WebFetch(domain:devenv.sh)"
     "WebFetch(domain:classifier.dev)"
+    "mcp__plugin_classifier_classifier__*"
+    "mcp__plugin_classifier_classifier-docs__*"
     "mcp__plugin_hm_ast-grep__*"
-    "mcp__plugin_hm_classifier__*"
     "mcp__plugin_hm_nixos__*"
   ];
 
