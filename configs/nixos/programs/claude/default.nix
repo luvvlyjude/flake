@@ -16,6 +16,21 @@
 
       toLang = lang: exts: genAttrs exts (_: lang);
 
+      # personal plugins don't get their hooks registered, so wire ponytail's by hand
+      ponytailHook = event: script: {
+        ${event} = [
+          {
+            hooks = [
+              {
+                type = "command";
+                command = "${getExe pkgs.nodejs} ${inputs.ponytail}/hooks/${script}.js";
+                timeout = 5;
+              }
+            ];
+          }
+        ];
+      };
+
       # icons colored like the bash PS1 in ../bash, plus ponytail's mode badge
       statusline = pkgs.writeShellApplication {
         name = "claude-statusline";
@@ -56,6 +71,11 @@
 
           sandbox = import ./sandbox.nix workspace;
           permissions = import ./permissions.nix workspace;
+
+          hooks =
+            ponytailHook "SessionStart" "ponytail-activate"
+            // ponytailHook "UserPromptSubmit" "ponytail-mode-tracker"
+            // ponytailHook "SubagentStart" "ponytail-subagent";
 
           statusLine = {
             type = "command";
