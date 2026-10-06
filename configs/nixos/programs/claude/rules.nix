@@ -1,4 +1,12 @@
 {
+  sandbox = ''
+    # Sandbox
+
+    Missing path, credential, socket or network access: stop and name what to
+    add to `~/Projects/flake/configs/nixos/programs/claude/sandbox.nix` or
+    `permissions.nix` next to it. Don't work around it.
+  '';
+
   scratch = ''
     # Scratch files
 

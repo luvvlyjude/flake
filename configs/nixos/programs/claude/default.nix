@@ -82,7 +82,7 @@
             command = getExe statusline;
           };
 
-          theme = "dark";
+          theme = "dark-ansi";
         };
 
         enableMcpIntegration = true;
