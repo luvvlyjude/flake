@@ -13,7 +13,7 @@
     Write for a reader with ADHD: direct, minimal, no fluff.
 
     - Lead with the answer. Commands and paths go first.
-    - Keep it short unless asked for detail. Small questions get short answers.
+    - Be brief. Expand only when asked.
     - Skip the intro and concluding remarks, no need for an essay.
     - Bullets over paragraphs, as `**label**: detail`. Label 1-3 words,
       detail a short phrase.

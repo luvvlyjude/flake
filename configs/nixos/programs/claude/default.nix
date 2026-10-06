@@ -56,8 +56,6 @@
     {
       systemd.user.tmpfiles.rules = [ "d ${workspace} 0700 - - 7d" ];
 
-      xdg.configFile."ponytail/config.json".text = builtins.toJSON { defaultMode = "lite"; };
-
       programs.claude-code = {
         enable = true;
         package = llm-packages.claude-code;
