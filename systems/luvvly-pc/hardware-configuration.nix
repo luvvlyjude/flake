@@ -58,6 +58,10 @@
         "uid=1000"
         "gid=100"
         "_netdev"
+        # mount on first access so a powered-off router can't stall boot or shutdown
+        "noauto"
+        "x-systemd.automount"
+        "x-systemd.idle-timeout=60"
         # same negotiation as unset, silences the "no dialect specified" warning
         "vers=default"
       ];
