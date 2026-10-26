@@ -62,23 +62,17 @@ rec {
     # overlaid so the plugins link against this obs instead of a second one
     obs-studio = prev.obs-studio.override { cudaSupport = true; };
 
-    # 2.6.0 fails against obs 32.2, fixed upstream but unreleased
+    # 2.6.0 fails against obs 32.2, fixed in 2.6.1
     # https://github.com/NixOS/nixpkgs/issues/556310
     obs-studio-plugins = prev.obs-studio-plugins // {
-      obs-shaderfilter = luvvlyLib.overrideAttrsUntil "2.6.1" prev.obs-studio-plugins.obs-shaderfilter {
-        version = "2.6.0-unstable-2026-09-22";
+      obs-shaderfilter = luvvlyLib.overrideAttrsUntil "2.6.1" prev.obs-studio-plugins.obs-shaderfilter rec {
+        version = "2.6.1";
         src = final.fetchFromGitHub {
           owner = "exeldro";
           repo = "obs-shaderfilter";
-          rev = "af9ae58f2aba19653e3635de129e7a62e466459d";
-          hash = "sha256-03j+g98krr1uTrhXzD96CuvNBvHd/cg/CdpioS3MygE=";
+          rev = version;
+          hash = "sha256-wlilfhytjG5qQvdbOEE75T/jWr160KBwTGI8cZ06ihQ=";
         };
-        # C23 strrchr returns const for a const arg, master still assigns it to char *
-        env.NIX_CFLAGS_COMPILE = "-Wno-error=discarded-qualifiers";
-        # master already installs to share/obs, the leftovers are duplicates
-        postInstall = ''
-          rm -rf $out/obs-plugins $out/data
-        '';
       };
     };
 
