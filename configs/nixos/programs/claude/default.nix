@@ -53,6 +53,8 @@
       programs.claude-code = {
         enable = true;
         package = llm-packages.claude-code;
+        # keep the upstream location instead of the 26.11 XDG default
+        configDir = "${config.home.homeDirectory}/.claude";
 
         settings = {
           awaySummaryEnabled = false;
