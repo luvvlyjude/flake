@@ -69,7 +69,8 @@
   };
 
   # initrd already unlocked /, the stage 2 copy only hits EBUSY on the mounted device.
-  # Remove once nixpkgs skips unlocking mounted filesystems.
+  # The module's `bcachefs unlock -c` ExecCondition doesn't catch it. No nixpkgs issue
+  # found (2026-10-26); to test, drop this, reboot, `systemctl status unlock-bcachefs--`.
   systemd.services."unlock-bcachefs--".enable = false;
 
   swapDevices = [
