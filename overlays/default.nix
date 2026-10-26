@@ -39,6 +39,9 @@ rec {
     # does not expose its own overlay
     jay-tray-item = inputs.jay-tray-item.packages.${prev.stdenv.hostPlatform.system}.default;
 
+    # its overlay builds against our nixpkgs and recurses, the package uses its own
+    mcp-nixos = inputs.mcp-nixos.packages.${prev.stdenv.hostPlatform.system}.mcp-nixos;
+
     # while ktrompfl's flake has outputs, including it as an input brings in many other inputs
     ninjabrain-box = final.callPackage "${inputs.ktrompfl}/pkgs/ninjabrain-box" {
       inherit inputs;
