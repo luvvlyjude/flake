@@ -64,6 +64,10 @@
     };
   };
 
+  # initrd already unlocked /, the stage 2 copy only hits EBUSY on the mounted device.
+  # Remove once nixpkgs skips unlocking mounted filesystems.
+  systemd.services."unlock-bcachefs--".enable = false;
+
   swapDevices = [
     { device = "/dev/disk/by-uuid/b89e6dab-ac87-4ec9-8be6-5aad9d8d5ffd"; }
   ];
