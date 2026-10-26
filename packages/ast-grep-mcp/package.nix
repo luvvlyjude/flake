@@ -33,15 +33,6 @@ stdenvNoCC.mkDerivation (_finalAttrs: {
 
   dontBuild = true;
 
-  # Upstream pins mcp 2.1.0, where the high-level server is `MCPServer`.
-  # nixpkgs still ships 1.29.0, which calls the same thing `FastMCP`. Drop this
-  # once nixpkgs/556839 lands. The `--transport sse` path stays broken under the
-  # rename (1.x `run()` takes no `port`); Claude Code only uses stdio.
-  postPatch = ''
-    substituteInPlace main.py \
-      --replace-fail "from mcp.server import MCPServer" "from mcp.server import FastMCP as MCPServer"
-  '';
-
   installPhase = ''
     runHook preInstall
 
