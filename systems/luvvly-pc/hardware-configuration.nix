@@ -58,6 +58,8 @@
         "uid=1000"
         "gid=100"
         "_netdev"
+        # same negotiation as unset, silences the "no dialect specified" warning
+        "vers=default"
       ];
     };
   };
