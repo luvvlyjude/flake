@@ -64,15 +64,17 @@ rec {
     # 2.6.0 fails against obs 32.2, fixed in 2.6.1
     # https://github.com/NixOS/nixpkgs/issues/556310
     obs-studio-plugins = prev.obs-studio-plugins // {
-      obs-shaderfilter = luvvlyLib.overrideAttrsUntil "2.6.1" prev.obs-studio-plugins.obs-shaderfilter rec {
-        version = "2.6.1";
-        src = final.fetchFromGitHub {
-          owner = "exeldro";
-          repo = "obs-shaderfilter";
-          rev = version;
-          hash = "sha256-wlilfhytjG5qQvdbOEE75T/jWr160KBwTGI8cZ06ihQ=";
-        };
-      };
+      obs-shaderfilter =
+        luvvlyLib.overrideAttrsUntil "2.6.1" prev.obs-studio-plugins.obs-shaderfilter
+          rec {
+            version = "2.6.1";
+            src = final.fetchFromGitHub {
+              owner = "exeldro";
+              repo = "obs-shaderfilter";
+              rev = version;
+              hash = "sha256-wlilfhytjG5qQvdbOEE75T/jWr160KBwTGI8cZ06ihQ=";
+            };
+          };
     };
 
     # spotify with autoscrolling and wayland forced
