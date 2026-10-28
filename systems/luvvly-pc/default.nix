@@ -64,6 +64,8 @@
     "programs/zen"
     "programs/ydotool"
     "programs/zed"
+
+    "services/immich"
   ];
 
   # resolved from ../../configs/home/
