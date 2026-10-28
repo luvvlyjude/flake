@@ -61,10 +61,6 @@ rec {
     # version bumps and upstream-fix pins go through luvvlyLib.overrideAttrsUntil,
     # so eval warns once nixpkgs catches up and the override can go
 
-    # without it the nvenc probe can't find the driver and obs hides nvenc;
-    # overlaid so the plugins link against this obs instead of a second one
-    obs-studio = prev.obs-studio.override { cudaSupport = true; };
-
     # 2.6.0 fails against obs 32.2, fixed in 2.6.1
     # https://github.com/NixOS/nixpkgs/issues/556310
     obs-studio-plugins = prev.obs-studio-plugins // {
