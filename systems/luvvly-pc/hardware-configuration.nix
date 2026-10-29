@@ -30,6 +30,8 @@
     kernelParams = [
       # dont touch BIOS configured ASPM value
       "pcie_aspm=off"
+      # keep NVMe out of deep sleep
+      "nvme_core.default_ps_max_latency_us=0"
     ];
   };
 
