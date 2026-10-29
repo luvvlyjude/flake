@@ -67,6 +67,7 @@
     "programs/zed"
 
     "services/immich"
+    "services/smartd"
   ];
 
   # resolved from ../../configs/home/
