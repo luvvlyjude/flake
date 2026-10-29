@@ -27,6 +27,7 @@
 
     "desktop/foot"
     "desktop/fuzzel"
+    "desktop/greetd"
     "desktop/i3status-rust"
     "desktop/jay"
     "desktop/theming"
