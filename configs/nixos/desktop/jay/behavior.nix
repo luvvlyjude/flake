@@ -49,6 +49,11 @@ in
   # ];
 
   on-graphics-initialized = [
+    # jay never stops graphical-session.target, so a systemd foot server outlives logout
+    (exec [
+      "foot"
+      "--server"
+    ])
     (multi [
       (exec (lib.getExe pkgs.jay-tray-power))
       (moveToOutput { output.name = "left"; })
