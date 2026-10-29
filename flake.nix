@@ -72,11 +72,6 @@
     # omitting follows costs a second nixpkgs evaluation but guarantees binary cache hits
     llm-agents.url = "github:numtide/llm-agents.nix";
 
-    # nixpkgs' mcp-nixos is broken until fastmcp 4 lands, drop this once it does
-    # https://github.com/NixOS/nixpkgs/pull/563493
-    # no follows: its fastmcp 4 extension recurses on our nixpkgs' mcp-types
-    mcp-nixos.url = "github:utensils/mcp-nixos";
-
     mcsr-nixos = {
       url = "https://git.uku3lig.net/luvvlyjude/mcsr-nixos/archive/tmpfs-symlink.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
