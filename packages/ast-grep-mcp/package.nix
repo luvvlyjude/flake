@@ -17,13 +17,13 @@ in
 
 stdenvNoCC.mkDerivation (_finalAttrs: {
   pname = "ast-grep-mcp";
-  version = "0.1.0-unstable-2026-08-25";
+  version = "0-unstable-2026-10-28";
 
   src = fetchFromGitHub {
     owner = "ast-grep";
     repo = "ast-grep-mcp";
-    rev = "149e20d47bb7125fb0c1451feea2f48a98742034";
-    hash = "sha256-G2bnsfmzpirQmcllr+wmrvR6n5exe/5OrHnfXDXoyPg=";
+    rev = "1e41164726d7ead57c8aa25f74946c4badba7f8a";
+    hash = "sha256-ojES2CjlN2bTEfGmZJO4gj+juuRF8808kn6YuDpqnxQ=";
   };
 
   strictDeps = true;
