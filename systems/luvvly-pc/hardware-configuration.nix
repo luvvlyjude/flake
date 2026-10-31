@@ -19,9 +19,9 @@
       "usbhid"
       "sd_mod"
     ];
-    kernelModules = [ ];
     # load early: stage 2 skips modules-load on this machine (systemd#3436)
     initrd.kernelModules = [ "it87" ];
+    kernelModules = [ "kvm-amd" ];
     # stock it87 has no IT8688E, the fan chip on this X570 board.
     # nixpkgs installs it next to the stock it87.ko.xz, which depmod then picks,
     # so move it to updates/, which depmod always prefers. Last make flag wins.
@@ -63,7 +63,10 @@
     "/boot" = {
       device = "/dev/disk/by-uuid/1926-4056";
       fsType = "vfat";
-      options = [ "umask=0077" ];
+      options = [
+        "fmask=0077"
+        "dmask=0077"
+      ];
     };
 
     "/mnt/readyshare" = {
