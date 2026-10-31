@@ -31,6 +31,39 @@ let
         | awk -F', ' '{printf "%.1fGB/%.0fGB", $1/1024, $2/1024}'
     '';
   };
+
+  mouse =
+    pkgs.writers.writePython3Bin "mouse"
+      {
+        libraries = [ pkgs.python3Packages.openrazer ];
+      }
+      ''
+        import json
+
+        from openrazer.client import DaemonNotFound, DeviceManager
+
+
+        def status():
+            try:
+                devices = DeviceManager().devices
+            except DaemonNotFound:
+                devices = []
+
+            for device in devices:
+                if device.has("battery"):
+                    charging = device.is_charging
+                    return {
+                        "icon": "mouse_charging" if charging else "mouse",
+                        "state": "Good" if charging else "Idle",
+                        "text": f"{device.battery_level}%",
+                    }
+
+            # empty text hides the block when the mouse is unplugged
+            return {"text": ""}
+
+
+        print(json.dumps(status()))
+      '';
 in
 {
   hm.programs.i3status-rust = {
@@ -53,6 +86,8 @@ in
               cpu = glyph "f2db"; # microchip
               gpu = glyph "f11b"; # gamepad
               memory_mem = glyph "f538"; # memory
+              mouse = glyph "f8cc"; # computer-mouse
+              mouse_charging = glyph "f0e7"; # bolt
             };
           };
         };
@@ -97,6 +132,14 @@ in
             # TODO: i kinda want a monitor emoji when missing
             # missing_format = "\\uf108";
             missing_format = "";
+          }
+          {
+            block = "custom";
+            command = lib.getExe mouse;
+            format = "$icon$text";
+            hide_when_empty = true;
+            json = true;
+            interval = 3;
           }
           {
             block = "sound";
