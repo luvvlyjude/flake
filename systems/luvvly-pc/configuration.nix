@@ -6,6 +6,7 @@
       # systemd-boot.enable = true;
       limine = {
         enable = true;
+        maxGenerations = 10;
         secureBoot = {
           enable = true;
           autoEnrollKeys = {
