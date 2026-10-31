@@ -5,6 +5,7 @@
 
   modules = [
     ./configuration.nix
+    ./fans.nix
     ./hardware-configuration.nix
     ./openrgb.nix
   ];
