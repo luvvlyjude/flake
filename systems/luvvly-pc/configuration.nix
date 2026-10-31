@@ -27,8 +27,6 @@
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
-  # initrd's local-fs.target stays active past switch-root, so bootctl sees the bare
-  # world-readable /boot mountpoint before the ESP mounts and warns about it.
-  # https://github.com/systemd/systemd/issues/3436; to test, drop this, reboot, `systemctl status systemd-boot-random-seed`.
+  # wait for the ESP: stage 2 doesn't re-run local-fs.target on this machine (systemd#3436)
   systemd.services.systemd-boot-random-seed.unitConfig.RequiresMountsFor = "/boot";
 }
