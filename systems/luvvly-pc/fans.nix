@@ -37,7 +37,8 @@ let
         id = "gpu";
         # needs NVML, which fan2go only builds with under cudaSupport
         nvidia = {
-          device = "nvidia-10DE1E84-0A00";
+          # regex, so leaving off the PCI slot (-0A00) survives moving the card
+          device = "nvidia-10DE1E84";
           index = 1;
         };
       }
@@ -81,7 +82,7 @@ let
   };
 in
 {
-  # no NixOS module for fan2go; on exit it hands the fans back to the BIOS
+  # no NixOS module for fan2go; if it stops, the fans run fast until reboot
   systemd.services.fan2go = {
     description = "fan2go fan control";
     wantedBy = [ "multi-user.target" ];
