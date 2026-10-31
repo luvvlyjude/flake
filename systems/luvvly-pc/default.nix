@@ -6,6 +6,7 @@
   modules = [
     ./configuration.nix
     ./hardware-configuration.nix
+    ./openrgb.nix
   ];
 
   # resolved from ../../configs/nixos/

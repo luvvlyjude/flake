@@ -32,6 +32,8 @@
       "pcie_aspm=off"
       # keep NVMe out of deep sleep
       "nvme_core.default_ps_max_latency_us=0"
+      # let OpenRGB see RAM by letting i2c-piix4 use the SMBus the BIOS reserves
+      "acpi_enforce_resources=lax"
     ];
   };
 
