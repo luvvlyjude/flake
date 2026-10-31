@@ -139,7 +139,7 @@ in
             format = "$icon$text";
             hide_when_empty = true;
             json = true;
-            interval = 3;
+            interval = 60;
           }
           {
             block = "sound";
