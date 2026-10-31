@@ -19,9 +19,21 @@
       "usbhid"
       "sd_mod"
     ];
-    initrd.kernelModules = [ ];
     kernelModules = [ ];
-    extraModulePackages = [ ];
+    # load early: stage 2 skips modules-load on this machine (systemd#3436)
+    initrd.kernelModules = [ "it87" ];
+    # stock it87 has no IT8688E, the fan chip on this X570 board.
+    # nixpkgs installs it next to the stock it87.ko.xz, which depmod then picks,
+    # so move it to updates/, which depmod always prefers. Last make flag wins.
+    extraModulePackages = [
+      (config.boot.kernelPackages.it87.overrideAttrs (old: {
+        makeFlags = old.makeFlags ++ [
+          "MODDESTDIR=$(out)/lib/modules/${config.boot.kernelPackages.kernel.modDirVersion}/updates"
+        ];
+      }))
+    ];
+    # Gigabyte's ACPI claims the chip's ports, so it87 refuses to load without this
+    extraModprobeConfig = "options it87 ignore_resource_conflict=1";
     blacklistedKernelModules = [
       # disable module for unused 2070 SUPER GPU USB-C controller
       "ucsi_ccg"
