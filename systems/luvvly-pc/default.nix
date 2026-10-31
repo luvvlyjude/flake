@@ -75,5 +75,6 @@
   # resolved from ../../configs/home/
   homeModules = [
     "programs/obs"
+    "services/swayidle"
   ];
 }
