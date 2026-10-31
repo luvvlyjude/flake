@@ -14,6 +14,7 @@
     "core/environment/etc"
     "core/fonts.nix"
     "core/hardware/nvidia.nix"
+    "core/hardware/openrazer.nix"
     "core/localization.nix"
     "core/network/network-manager.nix"
     "core/network/printing.nix"
