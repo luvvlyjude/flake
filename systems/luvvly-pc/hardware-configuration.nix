@@ -19,9 +19,10 @@
       "usbhid"
       "sd_mod"
     ];
-    # load early: stage 2 skips modules-load on this machine (systemd#3436)
-    initrd.kernelModules = [ "it87" ];
-    kernelModules = [ "kvm-amd" ];
+    kernelModules = [
+      "it87"
+      "kvm-amd"
+    ];
     # stock it87 has no IT8688E, the fan chip on this X570 board.
     # nixpkgs installs it next to the stock it87.ko.xz, which depmod then picks,
     # so move it to updates/, which depmod always prefers. Last make flag wins.
@@ -91,6 +92,9 @@
   # The module's `bcachefs unlock -c` ExecCondition doesn't catch it. No nixpkgs issue
   # found (2026-10-26); to test, drop this, reboot, `systemctl status unlock-bcachefs--`.
   systemd.services."unlock-bcachefs--".enable = false;
+
+  # upstream unit lacks this, so its implicit Requires=sysinit.target survives switch-root
+  boot.initrd.systemd.services."bcachefs-wait-devices@".unitConfig.DefaultDependencies = false;
 
   swapDevices = [
     { device = "/dev/disk/by-uuid/b89e6dab-ac87-4ec9-8be6-5aad9d8d5ffd"; }

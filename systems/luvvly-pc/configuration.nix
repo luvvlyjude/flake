@@ -28,9 +28,6 @@
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
-  # wait for the ESP: stage 2 doesn't re-run local-fs.target on this machine (systemd#3436)
-  systemd.services.systemd-boot-random-seed.unitConfig.RequiresMountsFor = "/boot";
-
   services.smartd = {
     enable = true;
     # 7s ERC: bcachefs rebuilds from parity instead of stalling on a bad sector

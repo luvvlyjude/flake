@@ -64,12 +64,6 @@ in
 {
   services.hardware.openrgb.enable = true;
 
-  # load early: stage 2 skips modules-load on this machine (systemd#3436)
-  boot.initrd.kernelModules = [
-    "i2c-dev"
-    "i2c-piix4"
-  ];
-
   systemd.services.rgb-colors = {
     after = [ "openrgb.service" ];
     requires = [ "openrgb.service" ];

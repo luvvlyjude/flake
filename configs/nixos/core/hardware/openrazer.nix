@@ -36,9 +36,6 @@ in
     users = [ username ];
   };
 
-  # load early: stage 2 skips modules-load on this machine (systemd#3436)
-  boot.initrd.kernelModules = [ "razermouse" ];
-
   systemd.user.services.openrazer-settings = {
     after = [ "openrazer-daemon.service" ];
     requires = [ "openrazer-daemon.service" ];
