@@ -14,6 +14,8 @@
     ./users.nix
   ];
 
+  boot.tmp.cleanOnBoot = true;
+
   documentation = {
     doc.enable = false;
     info.enable = false;
