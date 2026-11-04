@@ -50,7 +50,7 @@ in
   sources = [
     (source "v4l2_input" "Facecam" {
       settings = {
-        device_id = "/dev/video0";
+        device_id = "/dev/v4l/by-id/usb-SHENZHEN_AONI_ELECTRONIC_CO.__LTD_Full_HD_webcam_20200618001-video-index0";
         input = 0;
         pixelformat = 1196444237;
         resolution = 3435973837400;
@@ -70,10 +70,10 @@ in
       };
     })
 
-    # /dev/videoN not by-id: v4l2 only auto-reconnects on an exact udev path match
+    # by-id so the cams can't swap at boot; costs hot-reconnect (v4l2 matches the udev /dev/videoN path)
     (source "v4l2_input" "Handcam" {
       settings = {
-        device_id = "/dev/video2";
+        device_id = "/dev/v4l/by-id/usb-GENERAL_GENERAL_WEBCAM-video-index0";
         input = 0;
         pixelformat = 1196444237;
         resolution = 5497558139600;
