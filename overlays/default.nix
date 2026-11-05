@@ -68,6 +68,20 @@ rec {
       '';
     });
 
+    # my nvidia_gpu fixes from luvvlyjude/i3status-rust: VRAM read as MiB, vram_* placeholders
+    i3status-rust = luvvlyLib.overrideAttrsUntil "0.36.3" prev.i3status-rust (oldAttrs: {
+      patches = (oldAttrs.patches or [ ]) ++ [
+        (final.fetchpatch {
+          url = "https://github.com/luvvlyjude/i3status-rust/commit/e3814f336180a4ea132e8cf96ce7fc24aee11c05.patch";
+          hash = "sha256-g4UuAR22tjfL3/aeksH25ii4vvWS3hd9cukXcKY1ODY=";
+        })
+        (final.fetchpatch {
+          url = "https://github.com/luvvlyjude/i3status-rust/commit/1177c071149b32fb7d9706b3b1bb967e63419c68.patch";
+          hash = "sha256-TUvwQJC3uoPUAvu6UGWTL19GSUUiFnBtVo0CAfM5ZNU=";
+        })
+      ];
+    });
+
     # UI tests need AWT; not a version bump, so overrideAttrsUntil can't tell when nixpkgs#581568 lands
     ninjabrain-bot =
       prev.lib.warnIfNot (prev.lib.hasInfix "headless" prev.ninjabrain-bot.env.JAVA_HOME.name)
