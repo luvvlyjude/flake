@@ -12,13 +12,6 @@
       # autoPatchelf corrupts native-image so the install check segfaults; only java is used
       # https://github.com/NixOS/nixpkgs/pull/578694
       graalvm = mcsrPkgs.graalvm-21.overrideAttrs { doInstallCheck = false; };
-
-      # Tracked build (rule A.8.4), unpatched; Prism's LD_LIBRARY_PATH covers its dlopens.
-      glfw = pkgs.fetchurl {
-        name = "libglfw.so";
-        url = "https://github.com/JamiKettunen/mcsr-glfw/releases/download/20261019-v3.5.1/libglfw-x86_64.so";
-        sha512 = "9c6f51924ca376ba13936157778de2e7e35be34c69ab904241db32266161f3184974e08daba73eeea91afbab329b23c8e088985845562946e3c015faca9ab036";
-      };
     in
     {
       programs.prismlauncher = {
@@ -27,6 +20,7 @@
           additionalLibs = [
             pkgs.jemalloc
           ];
+          glfw3-minecraft = pkgs.glfw-mcsr;
           jdks = [
             graalvm
           ];
@@ -50,7 +44,6 @@
           MaxMemAlloc = 4096;
           MinMemAlloc = 4096;
           UseNativeGLFW = true;
-          CustomGLFWPath = "${glfw}";
           WrapperCommand = "waywall wrap --";
         };
       };
