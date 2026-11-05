@@ -27,6 +27,7 @@
     "core/rtkit"
     "core/sound/pipewire.nix"
     "core/tty-config"
+    "core/zswap"
 
     "desktop/foot"
     "desktop/fuzzel"
