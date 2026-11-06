@@ -8,8 +8,8 @@ let
   # nix has no \u escape, so let JSON decode it
   glyph = code: builtins.fromJSON ''"\u${code}"'';
 
-  gib = "eng(w:3, p:Gi, hide_unit, pad_with:'')";
-  mbit = "eng(w:1, prefix:M, unit:b)";
+  gib = "w:3, p:Gi, hide_unit, pad_with:''";
+  mbit = "w:1, prefix:M, unit:b";
 
   mouse =
     pkgs.writers.writePython3Bin "mouse"
@@ -79,8 +79,8 @@ in
             block = "nvidia_gpu";
             format = lib.concatStrings [
               "$icon$utilization "
-              "($vram_used.${gib}/"
-              "$vram_total.${gib})"
+              "($vram_used.eng(${gib})/"
+              "$vram_total.eng(${gib}))"
             ];
             interval = 3;
             # temps
@@ -93,34 +93,35 @@ in
             block = "memory";
             format = lib.concatStrings [
               "$icon"
-              "$mem_used.${gib}/"
-              "$mem_total.${gib} "
-              "($zswap_compressed.${gib})"
+              "$mem_used.eng(${gib})/"
+              "$mem_total.eng(${gib})"
+              # range hides values below 100 MiB, which would round to 0.0
+              "{ ($zswap_compressed.eng(${gib}, range:100Mi..))|}"
             ];
           }
           {
             block = "memory";
             format = lib.concatStrings [
               "$icon_swap"
-              "$swap_used.${gib}/"
-              "$swap_total.${gib} "
-              "($zswap_decompressed.${gib})"
+              "$swap_used.eng(${gib}, range:100Mi..)/"
+              "$swap_total.eng(${gib}) "
+              "($zswap_decompressed.eng(${gib})) |"
             ];
           }
           {
             block = "disk_space";
             format = lib.concatStrings [
               "$icon"
-              "$used.${gib}/"
-              "$total.${gib}"
+              "$used.eng(${gib})/"
+              "$total.eng(${gib})"
             ];
           }
           {
             block = "net";
             format = lib.concatStrings [
-              "$icon{$signal_strength|100%} "
-              "^icon_net_down$speed_down.${mbit} "
-              "^icon_net_up$speed_up.${mbit}"
+              "$icon{$signal_strength | }"
+              "^icon_net_down$speed_down.eng(${mbit}) "
+              "^icon_net_up$speed_up.eng(${mbit})"
             ];
             interval = 3;
           }
