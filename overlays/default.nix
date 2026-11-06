@@ -18,6 +18,7 @@ rec {
     inputs.bcachefs-tools.overlays.default
     inputs.jay.overlays.default
     inputs.jay-screenshot.overlays.default
+    inputs.jay-tray-item.overlays.default
   ];
 
   # collect all custom packages from '../packages' directory, flat at any depth
@@ -35,10 +36,7 @@ rec {
     );
 
   # packages to overlay from external sources
-  external = final: prev: {
-    # does not expose its own overlay
-    jay-tray-item = inputs.jay-tray-item.packages.${prev.stdenv.hostPlatform.system}.default;
-
+  external = final: _prev: {
     # while ktrompfl's flake has outputs, including it as an input brings in many other inputs
     ninjabrain-box = final.callPackage "${inputs.ktrompfl}/pkgs/ninjabrain-box" {
       inherit inputs;
