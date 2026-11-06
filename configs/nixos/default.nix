@@ -10,7 +10,9 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.jay.nixosModules.default
     inputs.mcsr-nixos.nixosModules.tmpfs-symlink
+    inputs.sops-nix.nixosModules.sops
 
+    ./core/sops
     ./users.nix
   ];
 

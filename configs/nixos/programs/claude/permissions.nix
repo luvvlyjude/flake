@@ -25,6 +25,6 @@ workspace: {
     "Read(~/.config/gh/**)"
     "Read(~/.ssh/**)"
     "Read(//run/secrets.d/**)"
-    "Read(//persist/sops/**)"
+    "Read(//var/lib/sops/**)"
   ];
 }
