@@ -1,10 +1,26 @@
+{ config, username, ... }:
+
 {
   programs.git = {
     enable = true;
   };
 
+  sops = {
+    secrets."emails/online" = { };
+
+    templates.git-identity = {
+      content = ''
+        [user]
+          email = ${config.sops.placeholder."emails/online"}
+      '';
+      owner = username;
+    };
+  };
+
   hm.programs.git = {
     enable = true;
+
+    includes = [ { inherit (config.sops.templates.git-identity) path; } ];
 
     settings = {
       init = {
@@ -15,13 +31,7 @@
         "git@github.com:".pushInsteadOf = "https://github.com/";
       };
 
-      user = {
-        name = "jude";
-        email = builtins.concatStringsSep "@" [
-          "luvvlyjude"
-          "gmail.com"
-        ];
-      };
+      user.name = "jude";
     };
 
     ignores = [
