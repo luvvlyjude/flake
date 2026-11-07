@@ -9,7 +9,7 @@ let
   glyph = code: builtins.fromJSON ''"\u${code}"'';
 
   gib = "w:3, p:Gi, hide_unit, pad_with:''";
-  mbit = "w:1, prefix:M, unit:b";
+  mbit = "w:2, prefix:M, unit:b";
 
   mouse =
     pkgs.writers.writePython3Bin "mouse"
