@@ -73,7 +73,6 @@ in
           {
             block = "cpu";
             format = "$icon$utilization";
-            interval = 3;
           }
           {
             block = "nvidia_gpu";
@@ -82,7 +81,6 @@ in
               "($vram_used.eng(${gib})/"
               "$vram_total.eng(${gib}))"
             ];
-            interval = 3;
             # temps
             idle = 60;
             good = 75;
@@ -138,7 +136,7 @@ in
             format = "$icon$text";
             hide_when_empty = true;
             json = true;
-            interval = 60;
+            interval = 5;
           }
           {
             block = "sound";
