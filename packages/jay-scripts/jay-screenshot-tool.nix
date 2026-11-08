@@ -47,7 +47,7 @@ writeShellApplication {
       save() {
         dir="''${XDG_PICTURES_DIR:-$HOME/Pictures}/Screenshots"
         mkdir -p "$dir"
-        saved="$dir/$(date +%Y-%m-%d_%H-%M-%S).png"
+        saved="$dir/Screenshot_$(date +%Y-%m-%d_%H-%M-%S).png"
         mv "$1" "$saved"
         echo "$saved"
       }
