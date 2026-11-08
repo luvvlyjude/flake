@@ -1,25 +1,25 @@
-{
-  pkgs,
-  lib,
-  self,
-  system,
-  ...
-}:
+{ lib, self, ... }:
 
 let
   inherit (lib) getExe;
-  inherit (pkgs) runCommandLocal;
 in
 {
-  formatting = self.formatter.${system}.check self;
+  perSystem =
+    { pkgs, ... }:
+    let
+      inherit (pkgs) runCommandLocal;
+    in
+    {
+      checks = {
+        statix = runCommandLocal "check-statix" { } ''
+          ${getExe pkgs.statix} check ${self}
+          touch $out
+        '';
 
-  statix = runCommandLocal "check-statix" { } ''
-    ${getExe pkgs.statix} check ${self}
-    touch $out
-  '';
-
-  deadnix = runCommandLocal "check-deadnix" { } ''
-    ${getExe pkgs.deadnix} --fail ${self}
-    touch $out
-  '';
+        deadnix = runCommandLocal "check-deadnix" { } ''
+          ${getExe pkgs.deadnix} --fail ${self}
+          touch $out
+        '';
+      };
+    };
 }

@@ -43,6 +43,11 @@
       };
     };
 
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -100,68 +105,44 @@
 
   outputs =
     inputs:
-    let
-      baseArgs = {
-        inherit inputs;
-        inherit (inputs) self;
-        inherit (inputs.nixpkgs) lib;
-      };
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
+      { lib, ... }:
+      let
+        # built before others so they can comsum it :3
+        luvvlyLib = import ./lib { inherit lib; };
+      in
+      {
+        imports = [
+          ./checks
+          ./formatter
+          ./modules/home
+          ./modules/nixos
+          ./overlays
+          ./packages
+          ./systems
+        ];
 
-      # built before others so they can comsum it :3
-      luvvlyLib = import ./lib baseArgs;
+        systems = import inputs.systems;
 
-      # attr set here saves reevaluating in each use of perSystem if it had been a function
-      # applies flake's overlays and some config so that everything agrees on what pkgs is
-      systemsPkgsMap = inputs.nixpkgs.lib.genAttrs (import inputs.systems) (
-        system:
-        import inputs.nixpkgs {
-          inherit system;
-          config = {
-            allowUnfree = true;
-            cudaSupport = true;
+        _module.args = { inherit luvvlyLib; };
+
+        # custom lib functions
+        # imported/passed basically everywhere through args or specialArgs or callPackage
+        flake.lib = luvvlyLib;
+
+        perSystem =
+          { system, ... }:
+          {
+            # applies flake's overlays and some config so that everything agrees on what pkgs is
+            _module.args.pkgs = import inputs.nixpkgs {
+              inherit system;
+              config = {
+                allowUnfree = true;
+                cudaSupport = true;
+              };
+              overlays = [ inputs.self.overlays.default ];
+            };
           };
-          overlays = [ inputs.self.overlays.default ];
-        }
-      );
-
-      commonArgs = baseArgs // {
-        inherit luvvlyLib systemsPkgsMap;
-      };
-
-      importOutput = luvvlyLib.importWith commonArgs;
-
-      importPerSystemOutput =
-        file:
-        inputs.nixpkgs.lib.mapAttrs (
-          system: pkgs: luvvlyLib.importWith (commonArgs // { inherit pkgs system; }) file
-        ) systemsPkgsMap;
-    in
-    {
-      # custom lib functions
-      # imported/passed basically everywhere through args or specialArgs or callPackage
-      lib = luvvlyLib;
-
-      checks = importPerSystemOutput ./checks;
-      formatter = importPerSystemOutput ./formatter;
-
-      # custom packages
-      # auto discovered from ./packages
-      # accessible through 'nix build', 'nix shell', etc
-      # packages r sourced from this flake's overlays output so all overlays apply
-      packages = importPerSystemOutput ./packages;
-
-      # custom packages, package additions, and modifications exported as overlays
-      # 'default' combines all overlays, 'additions' and 'modifications' r separated
-      overlays = importOutput ./overlays;
-
-      # all nixos configurations
-      # auto discovered from ./systems
-      nixosConfigurations = importOutput ./systems;
-
-      # custom modules
-      # auto discovered from ./modules/{nixos,home}
-      # '.default' combines all modules for each, all exposed separately as well
-      nixosModules = importOutput ./modules/nixos;
-      homeModules = importOutput ./modules/home;
-    };
+      }
+    );
 }

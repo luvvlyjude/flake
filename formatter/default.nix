@@ -1,12 +1,9 @@
-{
-  inputs,
-  pkgs,
-  ...
-}:
+{ inputs, ... }:
 
-let
-  treefmt = inputs.treefmt-nix.lib.evalModule pkgs {
-    projectRootFile = "flake.nix";
+{
+  imports = [ inputs.treefmt-nix.flakeModule ];
+
+  perSystem.treefmt = {
     programs.nixfmt.enable = true;
     programs.stylua.enable = true;
 
@@ -15,11 +12,4 @@ let
       "configs/nixos/gaming/minecraft/waywall/waywall-config/ww_temporary_ninbot/**"
     ];
   };
-
-  inherit (treefmt.config.build) wrapper check;
-in
-wrapper.overrideAttrs (old: {
-  passthru = old.passthru or { } // {
-    inherit check;
-  };
-})
+}

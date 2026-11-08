@@ -8,7 +8,7 @@
   lib,
   luvvlyLib,
   hostName,
-  systemsPkgsMap,
+  withSystem,
   ...
 }:
 
@@ -46,7 +46,7 @@ in
       ++ map (prefixPathWith "../configs/nixos/") host.nixosModules;
 
       # pkgs built in flake.nix with all overlays and custom packages, keyed by host.system
-      nixpkgs.pkgs = systemsPkgsMap.${host.system};
+      nixpkgs.pkgs = withSystem host.system ({ pkgs, ... }: pkgs);
 
       hardware.enableAllFirmware = true;
 
