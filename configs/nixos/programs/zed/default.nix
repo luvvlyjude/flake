@@ -17,6 +17,11 @@
       programs.zed-editor = {
         enable = true;
 
+        # fhs lets zed's npm-downloaded copilot binary run; remote_server is re-exposed for installRemoteServer
+        package = pkgs.zed-editor.fhs // {
+          inherit (pkgs.zed-editor) remote_server remoteServerExecutableName;
+        };
+
         installRemoteServer = true;
 
         mutableUserSettings = false;
@@ -135,7 +140,8 @@
             delay_ms = 750;
           };
 
-          show_edit_predictions = false;
+          show_edit_predictions = true;
+          edit_predictions.provider = "copilot";
 
           telemetry = {
             diagnostics = false;
