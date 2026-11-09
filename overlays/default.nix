@@ -14,14 +14,15 @@ in
   flake.overlays = rec {
     # all overlays combined
     default = composeManyExtensions [
-      additions
-      external
-      modifications
-
       inputs.bcachefs-tools.overlays.default
       inputs.jay.overlays.default
       inputs.jay-screenshot.overlays.default
       inputs.jay-tray-item.overlays.default
+
+      additions
+      external
+
+      modifications
     ];
 
     # collect all custom packages from '../packages' directory, flat at any depth
