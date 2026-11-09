@@ -33,15 +33,15 @@
       flake = false;
     };
 
-    bcachefs-tools = {
-      url = "github:koverstreet/bcachefs-tools/v1.39.7";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        crane.follows = "crane";
-        rust-overlay.follows = "rust-overlay";
-        treefmt-nix.follows = "treefmt-nix";
-      };
-    };
+    # bcachefs-tools = {
+    #   url = "github:koverstreet/bcachefs-tools/v1.39.7";
+    #   inputs = {
+    #     nixpkgs.follows = "nixpkgs";
+    #     crane.follows = "crane";
+    #     rust-overlay.follows = "rust-overlay";
+    #     treefmt-nix.follows = "treefmt-nix";
+    #   };
+    # };
 
     flake-parts = {
       url = "github:hercules-ci/flake-parts";

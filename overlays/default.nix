@@ -14,7 +14,7 @@ in
   flake.overlays = rec {
     # all overlays combined
     default = composeManyExtensions [
-      inputs.bcachefs-tools.overlays.default
+      # inputs.bcachefs-tools.overlays.default
       inputs.jay.overlays.default
       inputs.jay-screenshot.overlays.default
       inputs.jay-tray-item.overlays.default
