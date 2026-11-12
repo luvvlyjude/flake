@@ -1,4 +1,11 @@
+{ pkgs, ... }:
 {
+  # zed's npm-downloaded copilot binary only needs libstdc++; keep the default library set out
+  programs.nix-ld = {
+    enable = true;
+    libraries = [ pkgs.stdenv.cc.cc.lib ];
+  };
+
   hm =
     {
       config,
@@ -16,11 +23,6 @@
     {
       programs.zed-editor = {
         enable = true;
-
-        # fhs lets zed's npm-downloaded copilot binary run; remote_server is re-exposed for installRemoteServer
-        package = pkgs.zed-editor.fhs // {
-          inherit (pkgs.zed-editor) remote_server remoteServerExecutableName;
-        };
 
         installRemoteServer = true;
 
