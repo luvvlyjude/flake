@@ -83,18 +83,6 @@ in
           })
         ];
       });
-
-      # UI tests need AWT; not a version bump, so overrideAttrsUntil can't tell when nixpkgs#581568 lands
-      ninjabrain-bot =
-        prev.lib.warnIfNot (prev.lib.hasInfix "headless" prev.ninjabrain-bot.env.JAVA_HOME.name)
-          "ninjabrain-bot: nixpkgs#581568 landed, drop the JAVA_HOME override"
-          (
-            prev.ninjabrain-bot.overrideAttrs (old: {
-              env = old.env // {
-                JAVA_HOME = final.jdk;
-              };
-            })
-          );
     };
   };
 }
