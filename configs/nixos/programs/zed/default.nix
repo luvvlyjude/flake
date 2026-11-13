@@ -1,11 +1,4 @@
-{ pkgs, ... }:
 {
-  # zed's npm-downloaded copilot binary only needs libstdc++; keep the default library set out
-  programs.nix-ld = {
-    enable = true;
-    libraries = [ pkgs.stdenv.cc.cc.lib ];
-  };
-
   hm =
     {
       config,
@@ -143,7 +136,6 @@
           };
 
           show_edit_predictions = true;
-          edit_predictions.provider = "copilot";
 
           telemetry = {
             diagnostics = false;
