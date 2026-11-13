@@ -53,8 +53,6 @@ workspace: {
       "/nix"
       "/bin"
       "/etc"
-      # zed's FHS env symlinks most of /etc (ssl certs, nix.conf) into here
-      "/.host-etc"
       "/run"
       "/usr"
       workspace
