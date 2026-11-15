@@ -66,6 +66,8 @@
           vertical_scroll_margin = 10;
           wrap_guides = [ 100 ];
 
+          diff_view_style = "unified";
+
           agent = {
             dock = "right";
             terminal_init_command = getExe config.programs.claude-code.finalPackage;
