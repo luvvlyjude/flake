@@ -11,10 +11,14 @@ Browser | [Zen](https://github.com/zen-browser/desktop)
 Terminal | [foot](https://codeberg.org/dnkl/foot)
 Launcher | [fuzzel](https://codeberg.org/dnkl/fuzzel)
 
-## Inspirations
+## Inspiration
 
 - [Ktrompfl](https://github.com/Ktrompfl/nix-config)
 - [uku](https://git.uku3lig.net/uku/flake)
 - [mrshmllow](https://github.com/mrshmllow/config)
 - [Ramblurr](https://github.com/Ramblurr/nixcfg)
 - [wallago](https://github.com/wallago/nix-config)
+
+## License
+
+[Licensed under MIT](https://github.com/luvvlyjude/flake/blob/main/LICENSE)
