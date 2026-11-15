@@ -8,6 +8,7 @@
 
   # autologin gives PAM no password, so unlock the keyring from sops
   sops.secrets."oo7/keyring-password" = { };
-  systemd.services."user@".serviceConfig.LoadCredential =
-    "oo7.keyring-encryption-password:${config.sops.secrets."oo7/keyring-password".path}";
+  systemd.services."user@".serviceConfig.LoadCredential = "oo7.keyring-encryption-password:${
+    config.sops.secrets."oo7/keyring-password".path
+  }";
 }
