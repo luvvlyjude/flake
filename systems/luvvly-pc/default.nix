@@ -34,6 +34,7 @@
     "desktop/greetd"
     "desktop/i3status-rust"
     "desktop/jay"
+    "desktop/oo7"
     "desktop/theming"
     "desktop/swaync"
     "desktop/xdg"
