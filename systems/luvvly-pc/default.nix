@@ -62,7 +62,6 @@
     "programs/nh"
     "programs/ranger"
     "programs/satty"
-    "programs/spotifast"
     "programs/tree"
     "programs/vlc"
     "programs/vscodium"
@@ -77,6 +76,7 @@
   # resolved from ../../configs/home/
   homeModules = [
     "programs/obs"
+    "programs/spotifast"
     "services/swayidle"
   ];
 }
