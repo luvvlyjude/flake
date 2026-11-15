@@ -1,7 +1,7 @@
 {
-  hm = { pkgs, ... }: {
+  hm ={ pkgs, ... }: {
     home.packages = with pkgs; [
-      spotify
+      spotifast
     ];
   };
 }

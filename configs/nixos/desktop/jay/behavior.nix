@@ -59,7 +59,7 @@ in
       (moveToOutput { output.name = "left"; })
     ])
     (exec { shell = "sleep 0.25; discord"; })
-    (exec { shell = "sleep 5; spotify"; })
+    (exec { shell = "sleep 5; spotifast"; })
     (showWorkspace "0")
     (createMark "right-monitor")
     (showWorkspace "1")

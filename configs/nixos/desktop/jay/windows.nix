@@ -49,7 +49,7 @@ in
         just-mapped = true;
         any = [
           { app-id = "discord"; }
-          { app-id = "spotify"; }
+          { app-id = "spotifast"; }
           { app-id = "com.obsproject.Studio"; }
         ];
       };

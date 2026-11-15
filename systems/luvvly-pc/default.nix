@@ -62,7 +62,7 @@
     "programs/nh"
     "programs/ranger"
     "programs/satty"
-    "programs/spotify"
+    "programs/spotifast"
     "programs/tree"
     "programs/vlc"
     "programs/vscodium"

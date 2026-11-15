@@ -59,16 +59,6 @@ in
 
       # version bumps and upstream-fix pins go through luvvlyLib.overrideAttrsUntil,
       # so eval warns once nixpkgs catches up and the override can go
-
-      # spotify with autoscrolling and wayland forced
-      spotify = prev.spotify.overrideAttrs (oldAttrs: {
-        preFixup = (oldAttrs.preFixup or "") + ''
-          gappsWrapperArgs+=(
-            --add-flags "--ozone-platform=wayland"
-            --add-flags "--enable-blink-features=MiddleClickAutoscroll"
-          )
-        '';
-      });
     };
   };
 }
