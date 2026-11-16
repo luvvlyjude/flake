@@ -69,7 +69,7 @@
           diff_view_style = "unified";
 
           agent = {
-            dock = "right";
+            dock = "left";
             terminal_init_command = getExe config.programs.claude-code.finalPackage;
           };
           project_panel = {
