@@ -1,8 +1,9 @@
-{ username, ... }:
+{ config, username, ... }:
 
 let
-  mapWorlds = worlds: map (world: "mcsr/worlds/maps/${world}") worlds;
-  mkSaves = name: ".local/share/PrismLauncher/instances/${name}/minecraft/saves";
+  home = config.users.users.${username}.home;
+  mapWorlds = worlds: map (world: "${home}/mcsr/worlds/maps/${world}") worlds;
+  mkSaves = name: "${home}/.local/share/PrismLauncher/instances/${name}/minecraft/saves";
   size = "15%";
 in
 {
