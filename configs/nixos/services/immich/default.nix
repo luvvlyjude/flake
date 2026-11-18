@@ -74,7 +74,11 @@ in
     };
   };
 
-  # firewall stays closed; reachable over tailscale0, which is trusted
+  networking.firewall.interfaces = {
+    enp5s0.allowedTCPPorts = [ config.services.immich.port ];
+    tailscale0.allowedTCPPorts = [ config.services.immich.port ];
+  };
+
   services.immich = {
     enable = true;
     host = "0.0.0.0";
