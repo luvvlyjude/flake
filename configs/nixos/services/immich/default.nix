@@ -79,6 +79,11 @@ in
     tailscale0.allowedTCPPorts = [ config.services.immich.port ];
   };
 
+  services.immich-public-proxy = {
+    enable = true;
+    immichUrl = "http://localhost:${toString config.services.immich.port}";
+  };
+
   services.immich = {
     enable = true;
     host = "0.0.0.0";
@@ -97,6 +102,8 @@ in
         accel = "nvenc";
         accelDecode = true;
       };
+
+      server.externalDomain = "https://luvvly-pc.tail935fcf.ts.net";
 
       machineLearning = {
         facialRecognition = {
