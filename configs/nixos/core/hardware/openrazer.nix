@@ -34,6 +34,7 @@ in
   hardware.openrazer = {
     enable = true;
     users = [ username ];
+    batteryNotifier.enable = false;
   };
 
   systemd.user.services.openrazer-settings = {
