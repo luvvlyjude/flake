@@ -17,9 +17,6 @@
       programs.prismlauncher = {
         enable = true;
         package = pkgs.prismlauncher.override {
-          additionalLibs = [
-            pkgs.jemalloc
-          ];
           glfw3-minecraft = pkgs.glfw-mcsr;
           jdks = [
             graalvm
@@ -33,8 +30,14 @@
           AutomaticJavaSwitch = false;
           ConsoleFont = "Noto Sans Mono";
           ConsoleFontSize = 12;
-          # Env = "\"{\\\"LD_PRELOAD\\\":\\\"${lib.getLib pkgs.jemalloc}/lib/libjemalloc.so.2\\\",\\\"MALLOC_CONF\\\":\\\"dirty_decay_ms:10000,muzzy_decay_ms:10000\\\",\\\"MANGOHUD_CONFIG\\\":\\\"fps_limit=300,no_display\\\",\\\"__GL_THREADED_OPTIMIZATIONS\\\":\\\"0\\\"}\"";
-          Env = "\"{\\\"LD_PRELOAD\\\":\\\"${lib.getLib pkgs.jemalloc}/lib/libjemalloc.so.2\\\",\\\"MANGOHUD_CONFIG\\\":\\\"fps_limit=300,no_display\\\",\\\"__GL_THREADED_OPTIMIZATIONS\\\":\\\"0\\\"}\"";
+          # double nested toJson because Prism stores Env as JSON inside quoted INI
+          Env = builtins.toJSON (
+            builtins.toJSON {
+              LD_PRELOAD = "${lib.getLib pkgs.jemalloc}/lib/libjemalloc.so.2";
+              MANGOHUD_CONFIG = "fps_limit=300,no_display";
+              __GL_THREADED_OPTIMIZATIONS = "0";
+            }
+          );
           EnableFeralGamemode = true;
           EnableMangoHud = true;
           IgnoreJavaCompatibility = true;
