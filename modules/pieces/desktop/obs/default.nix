@@ -1,5 +1,4 @@
 {
-  # scenes and the theme are added to this module from the files next to this one
   flake.homeModules.obs =
     {
       config,
@@ -10,48 +9,6 @@
 
     let
       inherit (lib.generators) toINI;
-
-      mapForced = lib.mapAttrs (
-        _: text: {
-          inherit text;
-          force = true;
-        }
-      );
-
-      mkEncoder =
-        attrs:
-        builtins.toJSON (
-          {
-            keyint_sec = 2;
-            preset = "p6";
-            lookahead = false;
-          }
-          // attrs
-        );
-
-      mkVideo =
-        {
-          width,
-          height,
-          fps,
-        }:
-        {
-          BaseCX = width;
-          BaseCY = height;
-          OutputCX = width;
-          OutputCY = height;
-          FPSType = 1;
-          FPSInt = fps;
-        };
-
-      mkTracks =
-        names:
-        lib.mergeAttrsList (
-          lib.imap1 (i: name: {
-            "Track${toString i}Name" = name;
-            "Track${toString i}Bitrate" = 320;
-          }) names
-        );
 
       recordingsPath = config.home.homeDirectory + "/Videos/Recordings";
     in
@@ -66,22 +23,17 @@
 
       systemd.user.tmpfiles.rules = [ "d ${recordingsPath}" ];
 
-      # defaults excluded and diff.sh ignores defaults too
-      xdg.configFile = mapForced {
-        # "Untitled" is OBS's default profile and collection name
-        "obs-studio/basic/profiles/Untitled/recordEncoder.json" = mkEncoder {
-          rate_control = "CQP";
-          cqp = 18;
-        };
+      # default config values excluded
+      xdg.configFile = lib.mapAttrs (_: file: file // { force = true; }) {
+        "obs-studio/basic/scenes/Untitled.json".source = ./scenes.json;
 
-        "obs-studio/basic/profiles/Untitled/streamEncoder.json" = mkEncoder {
-          rate_control = "CBR";
-          bitrate = 7900;
-        };
+        # stable path for scenes.json
+        "obs-studio/shaders/fisheye.shader".source =
+          "${pkgs.obs-studio-plugins.obs-shaderfilter}/share/obs/obs-plugins/obs-shaderfilter/examples/fisheye.shader";
 
-        "obs-studio/user.ini" = toINI { } {
+        "obs-studio/user.ini".text = toINI { } {
           General.FirstRun = true;
-          Appearance.Theme = "com.luvvly.Yami.Luvvly";
+          Appearance.Theme = "com.luvvly.Yami.Luvvly"; # ./theme.nix
 
           BasicWindow = {
             SysTrayEnabled = false;
@@ -94,14 +46,17 @@
           };
         };
 
-        "obs-studio/basic/profiles/Untitled/basic.ini" = toINI { } {
+        "obs-studio/basic/profiles/Untitled/basic.ini".text = toINI { } {
           Output.Mode = "Advanced";
           Stream1.IgnoreRecommended = true;
 
-          Video = mkVideo {
-            width = 1920;
-            height = 1080;
-            fps = 60;
+          Video = {
+            BaseCX = 1920;
+            BaseCY = 1080;
+            OutputCX = 1920;
+            OutputCY = 1080;
+            FPSType = 1;
+            FPSInt = 60;
           };
 
           AdvOut = {
@@ -110,16 +65,37 @@
             RecFilePath = recordingsPath;
             RecTracks = 62; # bitmask, tracks 2-6
             RecEncoder = "obs_nvenc_hevc_tex";
-          }
-          # order matters
-          // mkTracks [
-            "MC+Mic+Discord+Spotify" # 1
-            "MC+Mic+Discord" # 2
-            "Minecraft" # 3
-            "Mic" # 4
-            "Discord" # 5
-            "Spotify" # 6
-          ];
+
+            Track1Name = "MC+Mic+Discord+Spotify";
+            Track2Name = "MC+Mic+Discord";
+            Track3Name = "Minecraft";
+            Track4Name = "Mic";
+            Track5Name = "Discord";
+            Track6Name = "Spotify";
+
+            Track1Bitrate = 320;
+            Track2Bitrate = 320;
+            Track3Bitrate = 320;
+            Track4Bitrate = 320;
+            Track5Bitrate = 320;
+            Track6Bitrate = 320;
+          };
+        };
+
+        "obs-studio/basic/profiles/Untitled/recordEncoder.json".text = builtins.toJSON {
+          rate_control = "CQP";
+          cqp = 18;
+          keyint_sec = 2;
+          preset = "p6";
+          lookahead = false;
+        };
+
+        "obs-studio/basic/profiles/Untitled/streamEncoder.json".text = builtins.toJSON {
+          rate_control = "CBR";
+          bitrate = 7900;
+          keyint_sec = 2;
+          preset = "p6";
+          lookahead = false;
         };
       };
     };
