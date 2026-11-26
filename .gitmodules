@@ -1,3 +1,3 @@
 [submodule "waywall-config"]
-	path = configs/nixos/gaming/minecraft/waywall/waywall-config
+	path = modules/pieces/gaming/minecraft/waywall-config
 	url = https://github.com/luvvlyjude/waywall-config.git

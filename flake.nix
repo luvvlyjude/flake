@@ -15,7 +15,7 @@
       flake = false;
     };
 
-    # source only, for claude plugins (see ./configs/nixos/programs/claude)
+    # source only, for claude plugins (see ./modules/pieces/development/ai/claude)
     ast-grep-agent-skill = {
       url = "github:ast-grep/agent-skill";
       flake = false;
@@ -52,6 +52,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    import-tree.url = "github:denful/import-tree";
 
     jay = {
       url = "github:mahkoh/jay";
@@ -103,46 +105,5 @@
     };
   };
 
-  outputs =
-    inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
-      { lib, ... }:
-      let
-        # built before others so they can comsum it :3
-        luvvlyLib = import ./lib { inherit lib; };
-      in
-      {
-        imports = [
-          ./checks
-          ./formatter
-          ./modules/home
-          ./modules/nixos
-          ./overlays
-          ./packages
-          ./systems
-        ];
-
-        systems = import inputs.systems;
-
-        _module.args = { inherit luvvlyLib; };
-
-        # custom lib functions
-        # imported/passed basically everywhere through args or specialArgs or callPackage
-        flake.lib = luvvlyLib;
-
-        perSystem =
-          { system, ... }:
-          {
-            # applies flake's overlays and some config so that everything agrees on what pkgs is
-            _module.args.pkgs = import inputs.nixpkgs {
-              inherit system;
-              config = {
-                allowUnfree = true;
-                cudaSupport = true;
-              };
-              overlays = [ inputs.self.overlays.default ];
-            };
-          };
-      }
-    );
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 }

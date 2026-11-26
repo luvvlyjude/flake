@@ -1,5 +1,0 @@
-{
-  boot.zswap = {
-    enable = true;
-  };
-}
