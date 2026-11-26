@@ -18,6 +18,7 @@
           "nix-command"
         ];
         auto-optimise-store = true;
+        commit-lock-file-summary = "flake(build): update inputs";
 
         # a flake's nixConfig would otherwise prompt mid-build to add caches
         accept-flake-config = false;
